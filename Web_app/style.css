@@ -1,10 +1,32 @@
 .css-17eq0hr {
-    background-color: #0099ff;
-    
+    background-color: #4c85e4;
+    background-attachment: fixed;
+    flex-shrink: 0;
+    height: 100vh;
+    overflow: auto;
+    padding: 5rem 1rem;
+    position: relative;
+    transition: margin-left 300ms ease 0s, box-shadow 300ms ease 0s;
+    width: 21rem;
+    z-index: 100;
+    margin-left: 0px;
 }
-.st-bh {
-    BACKGROUND: #ea86a1;
+.st-bg {
+    box-sizing: border-box;
+    background: #ff3547;
 }
-.css-1syfshr {
-    background-color: #ea86a1;
+.st-ay {
+    border-bottom-left-radius: 0rem;
 }
+<style>
+.st-ax {
+    border-bottom-right-radius: 0rem;
+}
+<style>
+.st-aw {
+    border-top-right-radius: 0rem;
+}
+
+<style>
+.st-av {
+    border-top-left-radius: 0rem;
