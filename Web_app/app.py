@@ -16,7 +16,7 @@ vAR_st.set_page_config(layout="wide")
 #for having the logo and title in the same line we use vAR.st_beta_columns() and make the ratio accordingly 
 vAR_logo, vAR_title = vAR_st.columns((6,50))
 with vAR_logo:
-  vAR_st.image('logo.jpg')
+  vAR_st.image('https://raw.githubusercontent.com/DeepsphereAI/Streamlit-CommonToAllIndustry/master/Web_app/logo.jpg')
 with vAR_title:
 #setting font size and colour for the title 
   
