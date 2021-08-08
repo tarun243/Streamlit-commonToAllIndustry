@@ -1,15 +1,5 @@
 .css-17eq0hr {
     background-color: #4c85e4;
-    background-attachment: fixed;
-    flex-shrink: 0;
-    height: 100vh;
-    overflow: auto;
-    padding: 5rem 1rem;
-    position: relative;
-    transition: margin-left 300ms ease 0s, box-shadow 300ms ease 0s;
-    width: 21rem;
-    z-index: 100;
-    margin-left: 0px;
 }
 .st-bg {
     box-sizing: border-box;
