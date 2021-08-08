@@ -39,7 +39,7 @@ def local_css(file_name):
     with open(file_name) as f:
         vAR_st.markdown('<style>{}</style>'.format(f.read()), unsafe_allow_html=True)
 
-local_css("style.css")
+local_css("https://github.com/DeepsphereAI/Streamlit-CommonToAllIndustry/blob/master/Web_app/style.css")
 @vAR_st.cache(suppress_st_warning=True)
 def csv_downloader(data):
   csvfile = data.to_csv()
