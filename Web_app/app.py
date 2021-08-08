@@ -3,7 +3,7 @@ import streamlit as vAR_st
 import streamlit.components.v1 as components
 import pandas as pd
 import docx2txt
-from PIL import Image 
+#from PIL import Image 
 from PyPDF3 import PdfFileReader
 import pdfplumber
 import base64 
