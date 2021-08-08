@@ -37,7 +37,7 @@ components.html("""<hr style="height:2px;border:none;color:#333;background-color
 vAR_st.write('')
 def local_css(file_name):
     with open(file_name) as f:
-        vAR_st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
+        vAR_st.markdown('<style>{}</style>'.format(f.read()), unsafe_allow_html=True)
 
 local_css("style.css")
 @vAR_st.cache(suppress_st_warning=True)
