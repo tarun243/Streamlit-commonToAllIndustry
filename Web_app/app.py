@@ -60,7 +60,7 @@ with col2:
   if vAR_problem != '':
     vAR_st.write('')
     vAR_st.write('')
-    vAR_st.subheader("Problem type")
+    vAR_st.subheader("Problem Type")
 with col3:
   if vAR_problem != '':
     vAR_type = vAR_st.selectbox('',('','Linear Regression','Nonlinear Regression','Bayesian Linear Regression'),index=0)
