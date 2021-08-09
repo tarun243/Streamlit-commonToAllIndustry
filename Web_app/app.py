@@ -33,13 +33,11 @@ div.stButton > button:first-child {
 
 components.html("""<hr style="height:2px;border:none;color:#333;background-color:#333;" /> """)
 
-#To give space between the title and the submit forms
-vAR_st.write('')
 def local_css(file_name):
     with open(file_name) as f:
         vAR_st.markdown('<style>{}</style>'.format(f.read()), unsafe_allow_html=True)
 
-#local_css("style.css")
+local_css("style.css")
 @vAR_st.cache(suppress_st_warning=True)
 def csv_downloader(data):
   csvfile = data.to_csv()
@@ -62,93 +60,165 @@ with col2:
   if vAR_problem != '':
     vAR_st.write('')
     vAR_st.write('')
-    vAR_st.subheader("Model Selection")
+    vAR_st.subheader("Problem type")
 with col3:
   if vAR_problem != '':
-    vAR_model = vAR_st.selectbox('',('','Random train/test splits','Cross-Validation','Bootstrap'),index=0)
+    vAR_type = vAR_st.selectbox('',('','Linear Regression','Nonlinear Regression','Bayesian Linear Regression'),index=0)
+
+col1, col2, col3, col4, col5 = vAR_st.columns([0.5,1.5,2,0.5,1])
+with col2:
+  if vAR_problem != '':
+    if vAR_type != '':
+      vAR_st.write('')
+      vAR_st.write('')
+      vAR_st.subheader("Model Selection")
+with col3:
+  if vAR_problem != '':
+    if vAR_type != '':
+      vAR_model = vAR_st.selectbox('',('','Random train/test splits','Cross-Validation','Bootstrap'),index=0)
 
 vAR_st.write('')
 col1, col2, col3, col4, col5 = vAR_st.columns([0.5,1.5,2,0.5,1])
 with col2:
   if vAR_problem != '':
-    if vAR_model != '':
-      vAR_st.write('')
-      vAR_st.write('')
-      vAR_st.subheader("Training Dataset")
+    if vAR_type != '':
+      if vAR_model != '':
+        vAR_st.write('')
+        vAR_st.write('')
+        vAR_st.subheader("Training Dataset")
 with col3:
   if vAR_problem != '':
-    if vAR_model != '':
-      vAR_training_data = vAR_st.file_uploader("Upload CSV file")
+    if vAR_type != '':
+      if vAR_model != '':
+        vAR_training_data = vAR_st.file_uploader("Upload CSV file")
 with col5:
   if vAR_problem != '':
-    if vAR_model != '':
-      validation = 'application/vnd.ms-excel'
-      if vAR_training_data is not None:
-        if vAR_training_data.type == validation:
-          df_training = pd.read_csv(vAR_training_data, encoding = 'unicode_escape',error_bad_lines=False)
-          vAR_st.markdown('#')
-          vAR_st.write('')
-          button_training = vAR_st.button('Preview', key="1")
-          if button_training:
-            csv_downloader(df_training)
-        else:
-          vAR_st.markdown('#')
-          vAR_st.write('Upload CSV file you uploaded',vAR_training_data.type)
+    if vAR_type != '':
+      if vAR_model != '':
+        validation = 'application/vnd.ms-excel'
+        if vAR_training_data is not None:
+          if vAR_training_data.type == validation:
+            df_training = pd.read_csv(vAR_training_data, encoding = 'unicode_escape',error_bad_lines=False)
+            vAR_st.markdown('#')
+            vAR_st.write('')
+            button_training = vAR_st.button('Preview', key="1")
+            if button_training:
+              csv_downloader(df_training)
+          else:
+            vAR_st.markdown('#')
+            vAR_st.write('Upload CSV file you uploaded',vAR_training_data.type)
 
 col1, col2, col3, col4, col5 = vAR_st.columns([0.5,1.5,2,0.5,1])
 with col2:
   if vAR_problem != '':
-    if vAR_model != '':
-      vAR_st.write('')
-      vAR_st.write('')
-      vAR_st.subheader("Testing Dataset")
+    if vAR_type != '':
+      if vAR_model != '':
+        vAR_st.write('')
+        vAR_st.write('')
+        vAR_st.subheader("Testing Dataset")
 with col3:
   if vAR_problem != '':
-    if vAR_model != '':
-      vAR_testing_data = vAR_st.file_uploader("upload CSV file")
+    if vAR_type != '':
+      if vAR_model != '':
+        vAR_testing_data = vAR_st.file_uploader("upload CSV file")
 with col5:
   if vAR_problem != '':
-    if vAR_model != '':
-      validation = 'application/vnd.ms-excel'
-      if vAR_testing_data is not None:
-        if vAR_testing_data.type == validation:
-          df_testing = pd.read_csv(vAR_testing_data, encoding = 'unicode_escape',error_bad_lines=False)
-          vAR_st.markdown('#')
-          vAR_st.write('')
-          button_testing = vAR_st.button('Preview', key="2")
-          if button_testing:
-            csv_downloader(df_testing)
-        else:
-          vAR_st.markdown('#')
-          vAR_st.write('Upload CSV file you uploaded',vAR_testing_data.type)
+    if vAR_type != '':
+      if vAR_model != '':
+        validation = 'application/vnd.ms-excel'
+        if vAR_testing_data is not None:
+          if vAR_testing_data.type == validation:
+            df_testing = pd.read_csv(vAR_testing_data, encoding = 'unicode_escape',error_bad_lines=False)
+            vAR_st.markdown('#')
+            vAR_st.write('')
+            button_testing = vAR_st.button('Preview', key="2")
+            if button_testing:
+              csv_downloader(df_testing)
+          else:
+            vAR_st.markdown('#')
+            vAR_st.write('Upload CSV file you uploaded',vAR_testing_data.type)
 
+col1, col2, col3, col4, col5 = vAR_st.columns([0.5,1.5,2,0.5,1])
+with col2:
+  if vAR_problem != '':
+    if vAR_type != '':
+      if vAR_model != '':
+        if vAR_testing_data and vAR_training_data:
+          vAR_st.write('')
+          vAR_st.write('')
+          vAR_st.subheader("Feature Engineering")
+with col3:
+  if vAR_problem != '':
+    if vAR_type != '':
+      if vAR_model != '':
+        if vAR_testing_data and vAR_training_data:
+          vAR_extraction = vAR_st.file_uploader("Feature Extraction")
+with col5:
+  if vAR_problem != '':
+    if vAR_type != '':
+      if vAR_model != '':
+        if vAR_testing_data and vAR_training_data:
+          validation = 'application/vnd.ms-excel'
+          if vAR_extraction is not None:
+            if vAR_extraction.type == validation:
+              df_extraction = pd.read_csv(vAR_extraction, encoding = 'unicode_escape',error_bad_lines=False)
+              vAR_st.markdown('#')
+              vAR_st.write('')
+              button_extraction = vAR_st.button('Preview', key="3")
+            else:
+              vAR_st.markdown('#')
+              vAR_st.write('Upload CSV file you uploaded',vAR_extraction.type)    
+
+col1, col2, col3, col4, col5 = vAR_st.columns([0.5,1.5,2,0.5,1])
+with col2:
+  if vAR_problem != '':
+    if vAR_type != '':
+      if vAR_model != '':
+        if vAR_testing_data and vAR_training_data:
+          if vAR_extraction:
+            vAR_st.write('')
+            vAR_st.write('')
+            vAR_st.markdown('#')
+            vAR_st.subheader("Model Engineering")
+with col3:
+  if vAR_problem != '':
+    if vAR_type != '':
+      if vAR_model != '':
+        if vAR_testing_data and vAR_training_data:
+          if vAR_extraction:
+            vAR_train_model = vAR_st.selectbox('Training',('','Train Model'),index=0)
+            vAR_test_model = vAR_st.selectbox('Testing',('','Test Model'),index=0)
+with col5:
+  if vAR_problem != '':
+    if vAR_type != '':
+      if vAR_model != '':
+        if vAR_testing_data and vAR_training_data:
+          if vAR_extraction:
+            if vAR_train_model == 'Train Model':
+              vAR_st.markdown('#')
+              button_train_model = vAR_st.button('Preview', key="4")
+            if vAR_test_model =='Test Model':
+              vAR_st.markdown('#')
+              button_test_model = vAR_st.button('Preview', key="5")
 vAR_st.markdown("""---""")
 
-menu = ["Home","Model Training","Model Testing","Model Validation","Download Model Outcome","Data visualization","Deploy the Model"]
+menu = ["Home","Model Validation","Download Model Outcome","Data visualization","Deploy the Model"]
 choice = vAR_st.sidebar.selectbox("Menu",menu)
 if choice == "Home":
     vAR_st.subheader("Go to the Menu")
 
-if choice == "Model Training":
-    vAR_st.subheader("Training the Model")
-    vAR_st.button("Click here", key="1")
-
-if choice == "Model Testing":
-    vAR_st.subheader("Testing the Model")
-    vAR_st.button("Click here", key="2")
-
 if choice == "Model Validation":
     vAR_st.subheader("Model Validation")
-    vAR_st.button("Click here", key="3")
+    vAR_st.button("Click here", key="6")
 
 if choice == "Download Model Outcome":
     vAR_st.subheader("To Download the Model Outcome")
-    vAR_st.button("Click here", key="4")
+    vAR_st.button("Click here", key="7")
 
 if choice == "Data visualization":
     vAR_st.subheader("Data visualization")
-    vAR_st.button("Click here", key="5")
+    vAR_st.button("Click here", key="8")
 
 if choice == "Deploy the Model":
     vAR_st.subheader("To Deploy the Model")
-    vAR_st.button("Click here", key="6")
+    vAR_st.button("Click here", key="9")
