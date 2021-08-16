@@ -43,7 +43,7 @@ def csv_downloader(data):
   csvfile = data.to_csv()
   b64 = base64.b64encode(csvfile.encode()).decode()
   vAR_filename = "new_csv_file_{}_.csv".format(timestr)
-  vAR_st.markdown("#### Download File ###")
+  #vAR_st.markdown("#### Download File ###")
   href = f'<a href="data:file/csv;base64,{b64}" download="{vAR_filename}">Click Here!!</a>'
   vAR_st.markdown(href,unsafe_allow_html=True)
 
@@ -60,7 +60,7 @@ with col2:
   if vAR_problem != '':
     vAR_st.write('')
     vAR_st.write('')
-    vAR_st.subheader("Problem Type")
+    vAR_st.subheader("Problem type")
 with col3:
   if vAR_problem != '':
     vAR_type = vAR_st.selectbox('',('','Linear Regression','Nonlinear Regression','Bayesian Linear Regression'),index=0)
@@ -165,6 +165,9 @@ with col5:
               vAR_st.markdown('#')
               vAR_st.write('')
               button_extraction = vAR_st.button('Preview', key="3")
+              if button_extraction:
+                csv_downloader(df_extraction)
+
             else:
               vAR_st.markdown('#')
               vAR_st.write('Upload CSV file you uploaded',vAR_extraction.type)    
@@ -187,6 +190,7 @@ with col3:
         if vAR_testing_data and vAR_training_data:
           if vAR_extraction:
             vAR_train_model = vAR_st.selectbox('Training',('','Train Model'),index=0)
+            vAR_st.write('')
             vAR_test_model = vAR_st.selectbox('Testing',('','Test Model'),index=0)
 with col5:
   if vAR_problem != '':
@@ -195,11 +199,16 @@ with col5:
         if vAR_testing_data and vAR_training_data:
           if vAR_extraction:
             if vAR_train_model == 'Train Model':
-              vAR_st.markdown('#')
+              vAR_st.write('')
               button_train_model = vAR_st.button('Preview', key="4")
+              if button_train_model:
+                csv_downloader(df_training)
             if vAR_test_model =='Test Model':
               vAR_st.markdown('#')
+              vAR_st.write('')
               button_test_model = vAR_st.button('Preview', key="5")
+              if button_test_model:
+                csv_downloader(df_testing)
 vAR_st.markdown("""---""")
 
 menu = ["Home","Model Validation","Download Model Outcome","Data visualization","Deploy the Model"]
