@@ -92,10 +92,15 @@ with col5:
   if vAR_problem != '':
     if vAR_type != '':
       if vAR_model != '':
-        validation = 'application/vnd.ms-excel' or 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+        #validation = 'application/vnd.ms-excel' or 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
         if vAR_training_data is not None:
-          if vAR_training_data.type == validation:
+          if vAR_training_data.type == 'application/vnd.ms-excel':
             df_training = pd.read_csv(vAR_training_data, encoding = 'unicode_escape',error_bad_lines=False)
+            vAR_st.markdown('#')
+            vAR_st.write('')
+            preview_training = vAR_st.button('Preview', key="1")
+          elif vAR_training_data.type == 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
+            df_training = pd.read_excel(vAR_training_data)
             vAR_st.markdown('#')
             vAR_st.write('')
             preview_training = vAR_st.button('Preview', key="1")
@@ -111,9 +116,9 @@ with col3:
   if vAR_problem != '':
     if vAR_type != '':
       if vAR_model != '':
-        validation = 'application/vnd.ms-excel' or 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+        #validation = 'application/vnd.ms-excel' or 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
         if vAR_training_data is not None:
-          if vAR_training_data.type == validation:
+          if vAR_training_data.type == 'application/vnd.ms-excel' or 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
             if preview_training:
               table_1 = HTML(df_training.to_html(col_space=None,max_rows=7,max_cols=6))
               vAR_st.write(table_1)
@@ -206,16 +211,22 @@ with col3:
         if vAR_training_data:
           vAR_st.subheader('Test the Model')
           vAR_testing_data = vAR_st.file_uploader("upload CSV file")
-          validation = 'application/vnd.ms-excel' or 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+          #validation = 'application/vnd.ms-excel' or 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
 with col5:
   if vAR_problem != '':
     if vAR_type != '':
       if vAR_model != '':
         if vAR_training_data:
-          validation = 'application/vnd.ms-excel' or 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+          #validation = 'application/vnd.ms-excel' or 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
           if vAR_testing_data is not None:
-            if vAR_testing_data.type == validation:
+            if vAR_testing_data.type == 'application/vnd.ms-excel':
               df_testing = pd.read_csv(vAR_testing_data, encoding = 'unicode_escape',error_bad_lines=False)
+              vAR_st.markdown('#')
+              vAR_st.markdown('#')
+              vAR_st.write('')
+              preview_testing = vAR_st.button('Preview', key="2")
+            elif vAR_training_data.type == 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
+              df_testing = pd.read_excel(vAR_testing_data)
               vAR_st.markdown('#')
               vAR_st.markdown('#')
               vAR_st.write('')
@@ -233,9 +244,9 @@ with col3:
     if vAR_type != '':
       if vAR_model != '':
         if vAR_training_data:
-          validation = 'application/vnd.ms-excel' or 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+          #validation = 'application/vnd.ms-excel' or 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
           if vAR_testing_data is not None:
-            if vAR_testing_data.type == validation:
+            if vAR_testing_data.type == 'application/vnd.ms-excel' or 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
               if preview_testing:
                 table_3 = HTML(df_testing.to_html(col_space=None,max_rows=7,max_cols=6))
                 vAR_st.write(table_3)
