@@ -30,7 +30,7 @@ components.html("""<hr style="height:2px;border:none;color:#333;background-color
 def local_css(file_name):
     with open(file_name) as f:
         vAR_st.markdown('<style>{}</style>'.format(f.read()), unsafe_allow_html=True)
-#local_css("style.css")
+local_css("style.css")
 
 
 
@@ -92,7 +92,7 @@ with col5:
   if vAR_problem != '':
     if vAR_type != '':
       if vAR_model != '':
-        validation = 'application/vnd.ms-excel'
+        validation = 'application/vnd.ms-excel' or 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
         if vAR_training_data is not None:
           if vAR_training_data.type == validation:
             df_training = pd.read_csv(vAR_training_data, encoding = 'unicode_escape',error_bad_lines=False)
@@ -111,7 +111,7 @@ with col3:
   if vAR_problem != '':
     if vAR_type != '':
       if vAR_model != '':
-        validation = 'application/vnd.ms-excel'
+        validation = 'application/vnd.ms-excel' or 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
         if vAR_training_data is not None:
           if vAR_training_data.type == validation:
             if preview_training:
@@ -206,13 +206,13 @@ with col3:
         if vAR_training_data:
           vAR_st.subheader('Test the Model')
           vAR_testing_data = vAR_st.file_uploader("upload CSV file")
-          validation = 'application/vnd.ms-excel'
+          validation = 'application/vnd.ms-excel' or 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
 with col5:
   if vAR_problem != '':
     if vAR_type != '':
       if vAR_model != '':
         if vAR_training_data:
-          validation = 'application/vnd.ms-excel'
+          validation = 'application/vnd.ms-excel' or 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
           if vAR_testing_data is not None:
             if vAR_testing_data.type == validation:
               df_testing = pd.read_csv(vAR_testing_data, encoding = 'unicode_escape',error_bad_lines=False)
@@ -233,7 +233,7 @@ with col3:
     if vAR_type != '':
       if vAR_model != '':
         if vAR_training_data:
-          validation = 'application/vnd.ms-excel'
+          validation = 'application/vnd.ms-excel' or 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
           if vAR_testing_data is not None:
             if vAR_testing_data.type == validation:
               if preview_testing:
