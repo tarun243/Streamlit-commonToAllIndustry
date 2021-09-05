@@ -2,6 +2,7 @@ import streamlit as vAR_st
 import streamlit.components.v1 as components
 import pandas as pd
 from IPython.display import HTML
+from sklearn.linear_model import LogisticRegression 
 
 #for Setting the page layout to wide
 vAR_st.set_page_config(layout="wide")
@@ -30,8 +31,72 @@ components.html("""<hr style="height:2px;border:none;color:#333;background-color
 def local_css(file_name):
     with open(file_name) as f:
         vAR_st.markdown('<style>{}</style>'.format(f.read()), unsafe_allow_html=True)
-#local_css("style.css")
+local_css("style.css")
 
+
+
+def training():
+
+  #training data
+  training_data = df_training 
+  training_data_features = training_data[['Quantity','Price','Service Call','Service Failure Rate%','Customer Lifetime(Days)']]
+            
+  #feature selection for training
+  training_data_features = training_data_features[['Customer Lifetime(Days)']]
+
+  #Label for Training
+  training_data_label = training_data[['Churn']]
+
+  #model training 
+  model = LogisticRegression()
+  model_training = model.fit(training_data_features,training_data_label)
+
+
+
+def testing():
+
+  #training data
+  training_data = df_training 
+  training_data_features = training_data[['Quantity','Price','Service Call','Service Failure Rate%','Customer Lifetime(Days)']]
+            
+  #feature selection for training
+  training_data_features = training_data_features[['Customer Lifetime(Days)']]
+
+  #Label for Training
+  training_data_label = training_data[['Churn']]
+
+  #model training 
+  model = LogisticRegression()
+  model_training = model.fit(training_data_features,training_data_label)
+
+  #Test Data
+  test_data = df_testing
+
+  #Feature Selection for Model Testing
+  test_data_features = test_data[['Customer Lifetime(Days)']]
+  test_data_features = training_data_features[['Customer Lifetime(Days)']]
+
+  #Model Testing
+  model_testing = model.predict(test_data_features)
+  model_prediction = pd.DataFrame(model_testing)
+  model_prediction = pd.DataFrame(model_testing,columns=['Churn Prediction'])
+
+  #table_5 = HTML(model_prediction.to_html(col_space=None,max_rows=10,max_cols=6))
+  #vAR_st.write(table_5)
+
+  prediction_result = test_data.merge(model_prediction,left_index=True,right_index=True)
+
+  #table_6 = HTML(prediction_result.to_html(col_space=None,max_rows=10,max_cols=6))
+  #vAR_st.write(table_6)
+  vAR_st.write('')
+
+  #Getting the Probability of Churn
+  prediction_result_probability_all_features = model.predict_proba(test_data_features)
+  prediction_result_probability_all_features = pd.DataFrame(prediction_result_probability_all_features,columns=['Probability of Non Churn', 'Probability of Churn'])
+  churn_probability = prediction_result.merge(prediction_result_probability_all_features,left_index=True,right_index=True)
+  table_7 = HTML(churn_probability.to_html(col_space=None,max_rows=10,max_cols=6))
+  vAR_st.write(table_7)
+  vAR_st.write('')
 
 
 
@@ -42,7 +107,6 @@ with col2:
     vAR_st.subheader("Problem Statement")
 with col3:
     vAR_problem = vAR_st.selectbox('',('','why','when','what'),index=0)
-
 
 
 
@@ -58,7 +122,6 @@ with col3:
 
 
 
-
 col1, col2, col3, col4, col5 = vAR_st.columns([0.5,1.5,2,0.5,1])
 with col2:
   if vAR_problem != '':
@@ -70,7 +133,6 @@ with col3:
   if vAR_problem != '':
     if vAR_type != '':
       vAR_model = vAR_st.selectbox('',('','Random train/test splits','Cross-Validation','Bootstrap'),index=0)
-
 
 
 
@@ -110,7 +172,6 @@ with col5:
 
 
 
-
 col1, col2, col3, col4 = vAR_st.columns([0.5,1.5,2.5,1])
 with col3:
   if vAR_problem != '':
@@ -130,7 +191,6 @@ with col3:
 
 
 
-
 col1, col2, col3, col4, col5 = vAR_st.columns([0.5,1.5,2,0.5,1])
 with col2:
   if vAR_problem != '':
@@ -146,7 +206,6 @@ with col3:
           vAR_st.write('')
           button_feature = vAR_st.button('Extract Feature')
           vAR_st.write('')
-
 
 
 
@@ -171,7 +230,6 @@ with col4:
 
 
 
-
 col1, col2, col3, col4, col5 = vAR_st.columns([0.5,1.5,2,0.5,1])
 with col2:
   if vAR_problem != '':
@@ -188,8 +246,10 @@ with col3:
           button_train = vAR_st.button('Train the Model')
           if button_train:
             vAR_st.image('https://i.gifer.com/IPNp.gif',width = 200)
-            vAR_success = vAR_st.success('Model training completed')
 
+            training()
+
+            vAR_success = vAR_st.success('Model training completed')
 
 
 
@@ -237,7 +297,6 @@ with col5:
 
 
 
-
 col1, col2, col3, col4 = vAR_st.columns([0.5,1.5,2.5,1])
 with col3:
   if vAR_problem != '':
@@ -258,8 +317,22 @@ with col3:
               vAR_st.write('')
               button_test = vAR_st.button('Test the Model')
               if button_test:
+                vAR_st.image('https://i.gifer.com/IPNp.gif',width = 200)
+
                 vAR_success_1 = vAR_st.success('Model testing completed')
 
+
+col1, col2, col4 = vAR_st.columns([1,2,1])
+with col2:
+  if vAR_problem != '':
+    if vAR_type != '':
+      if vAR_model != '':
+        if vAR_training_data:
+          #validation = 'application/vnd.ms-excel' or 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+          if vAR_testing_data is not None:
+            if vAR_testing_data.type == 'application/vnd.ms-excel' or 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
+              if button_test:
+                testing()
 
 
 
