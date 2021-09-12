@@ -32,8 +32,6 @@ vAR_st.markdown("""
 div.stButton > button:first-child { border: 1px solid; width: 55%; }
 </style>""", unsafe_allow_html=True)
 
-
-
 components.html("""<hr style="height:2px;border:none;color:#333;background-color:#333;" /> """)
 
 #@vAR_st.cache(suppress_st_warning=True)
@@ -41,7 +39,6 @@ def local_css(file_name):
     with open(file_name) as f:
         vAR_st.markdown('<style>{}</style>'.format(f.read()), unsafe_allow_html=True)
 #local_css("style.css")
-
 
 
 def training():
@@ -59,7 +56,6 @@ def training():
   #model training 
   model = LogisticRegression()
   model_training = model.fit(training_data_features,training_data_label)
-
 
 
 def testing():
@@ -104,7 +100,7 @@ def testing():
   vAR_st.write('')
 
 
-def code():
+def test_code():
   with vAR_st.echo():
     #training dataset
     training_data = df_training 
@@ -144,10 +140,40 @@ def code():
     vAR_st.write(table_7)
 
 
+def train_code():
+  with vAR_st.echo():
+    def training():
 
-menu = ["Home","Model Validation","Download Model Outcome","Data visualization","Deploy the Model","Source Code"]
+      #training data
+      training_data = df_training 
+      training_data_features = training_data[['Quantity','Price','Service Call','Service Failure Rate%','Customer Lifetime(Days)']]
+            
+      #feature selection for training
+      training_data_features = training_data_features[['Customer Lifetime(Days)']]
+
+      #Label for Training
+      training_data_label = training_data[['Churn']]
+
+      #model training 
+      model = LogisticRegression()
+      model_training = model.fit(training_data_features,training_data_label)
+
+
+def feature():
+  for col in df_training.columns:
+    vAR_st.write(col)
+
+def feature_code():
+  with vAR_st.echo():
+    def feature():
+      for col in df_training.columns:
+        vAR_st.write(col) 
+
+
+
+menu = ["Home","Model Validation","Download Model Outcome","Data visualization","Deploy the Model"]
 choice = vAR_st.sidebar.selectbox("Menu",menu)
-col1, col2, col3, col4, col5 = vAR_st.columns([0.5,1.5,2.75,0.5,1])
+col1, col2, col3, col4, col5 = vAR_st.columns([0.25,1.5,2.75,0.25,1.75])
 with col2:
     vAR_st.write('')
     vAR_st.write('')
@@ -157,7 +183,7 @@ with col3:
 
 
 
-col1, col2, col3, col4, col5 = vAR_st.columns([0.5,1.5,2.75,0.5,1])
+col1, col2, col3, col4, col5 = vAR_st.columns([0.25,1.5,2.75,0.25,1.75])
 with col2:
   if vAR_problem != '':
     vAR_st.write('')
@@ -169,7 +195,7 @@ with col3:
 
 
 
-col1, col2, col3, col4, col5 = vAR_st.columns([0.5,1.5,2.75,0.5,1])
+col1, col2, col3, col4, col5 = vAR_st.columns([0.25,1.5,2.75,0.25,1.75])
 with col2:
   if vAR_problem != '':
     if vAR_type != '':
@@ -180,11 +206,17 @@ with col3:
   if vAR_problem != '':
     if vAR_type != '':
       vAR_model = vAR_st.selectbox('',('','Random train/test splits','Cross-Validation','Bootstrap'),index=0)
+with col5:
+  if vAR_problem != '':
+    if vAR_type != '':
+      vAR_st.write('')
+      vAR_st.write('')
+      model_selection_source_code = vAR_st.button('source code',key='13')
 
 
 
 vAR_st.write('')
-col1, col2, col3, col4, col5 = vAR_st.columns([0.5,1.5,2.75,0.5,1])
+col1, col2, col3, col4, col5 = vAR_st.columns([0.25,1.5,2.75,0.25,1.75])
 with col2:
   if vAR_problem != '':
     if vAR_type != '':
@@ -218,25 +250,33 @@ with col5:
 
 
 
-col1, col2, col3, col4, col5 = vAR_st.columns([0.5,1.5,2.75,0.5,1])
+col1, col2, col3, col4, col5 = vAR_st.columns([0.25,1.5,2.75,0.25,1.75])
 with col3:
   if vAR_problem != '':
     if vAR_type != '':
       if vAR_model != '':
         if vAR_training_data is not None:
           if vAR_training_data.type == 'application/vnd.ms-excel' or 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
-            if preview_training:
-              table_1 = HTML(df_training.to_html(col_space=None,max_rows=7,max_cols=6))
-              vAR_st.write(table_1)
-            vAR_st.write('')  
             full_table_1 = vAR_st.button('Click for all Set of rows')
-            if full_table_1:
-              table_2 = HTML(df_training.to_html(col_space=None))
-              vAR_st.write(table_2)           
 
 
 
-col1, col2, col3, col4, col5 = vAR_st.columns([0.5,1.5,2.75,0.5,1])
+if vAR_problem != '':
+  if vAR_type != '':
+    if vAR_model != '':
+      if vAR_training_data is not None:
+        if vAR_training_data.type == 'application/vnd.ms-excel' or 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
+          if preview_training:
+            table_1 = HTML(df_training.to_html(col_space=None,max_rows=7,max_cols=6))
+            vAR_st.write(table_1)
+          vAR_st.write('')  
+          if full_table_1:
+            table_2 = HTML(df_training.to_html(col_space=None))
+            vAR_st.write(table_2)           
+
+
+
+col1, col2, col3, col4, col5 = vAR_st.columns([0.25,1.5,2.75,0.25,1.75])
 with col2:
   if vAR_problem != '':
     if vAR_type != '':
@@ -251,10 +291,17 @@ with col3:
           vAR_st.write('')
           button_feature = vAR_st.button('Extract Feature')
           vAR_st.write('')
+with col5:
+  if vAR_problem != '':
+    if vAR_type != '':
+      if vAR_model != '':
+        if vAR_training_data:
+          vAR_st.write('')
+          feature_source_code = vAR_st.button('source code',key='12')
 
 
 
-col1, col2, col3, col4= vAR_st.columns([0.5,2,2,2])
+col1, col2, col3, col4, col5= vAR_st.columns([0.25,2,2,2,1.75])
 with col3:
   if vAR_problem != '':
     if vAR_type != '':
@@ -262,20 +309,26 @@ with col3:
         if vAR_training_data:
           if button_feature:
             for i in range(len(df_training.columns)):
-              vAR_st.write('Feature ',i+1)
+              vAR_st.write('Feature ',i+1)    
 with col4:
   if vAR_problem != '':
     if vAR_type != '':
       if vAR_model != '':
         if vAR_training_data:
           if button_feature:
-            for col in df_training.columns:
-              vAR_st.write(col)
-            vAR_st.write('')  
+            feature()
+
+if vAR_problem != '':
+  if vAR_type != '':
+    if vAR_model != '':
+      if vAR_training_data:
+        if feature_source_code:
+          feature_code()
 
 
 
-col1, col2, col3, col4, col5 = vAR_st.columns([0.5,1.5,2.75,0.5,1])
+vAR_st.write('') 
+col1, col2, col3, col4, col5 = vAR_st.columns([0.25,1.5,2.75,0.25,1.75])
 with col2:
   if vAR_problem != '':
     if vAR_type != '':
@@ -292,20 +345,36 @@ with col3:
           button_train = vAR_st.button('Train the Model')
           if button_train:
             vAR_st.image('https://i.gifer.com/IPNp.gif',width = 200)
-
             training()
-
             vAR_success = vAR_st.success('Model training completed')
+with col5:
+  if vAR_problem != '':
+    if vAR_type != '':
+      if vAR_model != '':
+        if vAR_training_data:
+          vAR_st.write('')
+          train_source_code = vAR_st.button('source code',key="10")
+
+
+
+#to display traning code
+if vAR_problem != '':
+  if vAR_type != '':
+    if vAR_model != '':
+      if vAR_training_data:
+        if train_source_code:
+          train_code()
+
 
 
 vAR_st.write('')
-col1, col2, col3, col4, col5 = vAR_st.columns([0.5,1.5,2.75,0.5,1])
+col1, col2, col3, col4, col5 = vAR_st.columns([0.25,1.5,2.75,0.25,1.75])
 with col2:
   if vAR_problem != '':
     if vAR_type != '':
       if vAR_model != '':
         if vAR_training_data:
-          time.sleep(10)
+          #time.sleep(10)
           vAR_st.write('')
           vAR_st.write('')
           vAR_st.markdown('#')
@@ -315,16 +384,13 @@ with col3:
     if vAR_type != '':
       if vAR_model != '':
         if vAR_training_data:
-          #time.sleep(5)
           vAR_st.subheader('Test the Model')
           vAR_testing_data = vAR_st.file_uploader("upload CSV file")
-          
 with col5:
   if vAR_problem != '':
     if vAR_type != '':
       if vAR_model != '':
         if vAR_training_data:
-          #time.sleep(5)
           if vAR_testing_data is not None:
             if vAR_testing_data.type == 'application/vnd.ms-excel':
               df_testing = pd.read_csv(vAR_testing_data, encoding = 'unicode_escape',error_bad_lines=False)
@@ -343,29 +409,70 @@ with col5:
               vAR_st.write('Upload CSV file you uploaded',vAR_testing_data.type)
 
 
-col1, col2, col3, col4, col5 = vAR_st.columns([0.5,1.5,2.75,0.5,1])
+
+col1, col2, col3, col4, col5 = vAR_st.columns([0.25,1.5,2.75,0.25,1.75])
 with col3:
   if vAR_problem != '':
     if vAR_type != '':
       if vAR_model != '':
         if vAR_training_data:
-          #time.sleep(5)
           if vAR_testing_data is not None:
-            if vAR_testing_data.type == 'application/vnd.ms-excel' or 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
-              if preview_testing:
-                table_3 = HTML(df_testing.to_html(col_space=None,max_rows=7,max_cols=6))
-                vAR_st.write(table_3)
-              vAR_st.write('')  
-              full_table_2 = vAR_st.button('Click for all Set of Rows')
-              if full_table_2:
-                table_4 = HTML(df_testing.to_html(col_space=None))
-                vAR_st.write(table_4)
+            if vAR_testing_data.type == 'application/vnd.ms-excel' or 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet': 
               vAR_st.write('')
+              full_table_2 = vAR_st.button('Click for all Set of Rows')
+
+
+
+if vAR_problem != '':
+  if vAR_type != '':
+    if vAR_model != '':
+      if vAR_training_data:
+        if vAR_testing_data is not None:
+          if vAR_testing_data.type == 'application/vnd.ms-excel' or 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
+            if preview_testing:
+              table_3 = HTML(df_testing.to_html(col_space=None,max_rows=7,max_cols=6))
+              vAR_st.write(table_3)
+            vAR_st.write('')  
+            if full_table_2:
+              table_4 = HTML(df_testing.to_html(col_space=None))
+              vAR_st.write(table_4)
+            vAR_st.write('')
+
+
+
+col1, col2, col3, col4, col5 = vAR_st.columns([0.25,1.5,2.75,0.25,1.75])
+with col3:
+  if vAR_problem != '':
+    if vAR_type != '':
+      if vAR_model != '':
+        if vAR_training_data:
+          if vAR_testing_data is not None:
+            if vAR_testing_data.type == 'application/vnd.ms-excel' or 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet': 
               button_test = vAR_st.button('Test the Model')
               if button_test:
                 vAR_st.image('https://i.gifer.com/IPNp.gif',width = 200)
-
                 vAR_success_1 = vAR_st.success('Model testing completed')
+with col5:
+  if vAR_problem != '':
+    if vAR_type != '':
+      if vAR_model != '':
+        if vAR_training_data:
+          if vAR_testing_data is not None:
+            if vAR_testing_data.type == 'application/vnd.ms-excel' or 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':             
+              test_source_code = vAR_st.button('source code',key="11")
+
+
+
+#to display test code
+if vAR_problem != '':
+  if vAR_type != '':
+    if vAR_model != '':
+      if vAR_training_data:
+        if vAR_testing_data is not None:
+          if vAR_testing_data.type == 'application/vnd.ms-excel' or 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
+            if test_source_code:
+              test_code()
+
 
 
 col1, col2, col4 = vAR_st.columns([0.5,4,0.5])
@@ -374,14 +481,14 @@ with col2:
     if vAR_type != '':
       if vAR_model != '':
         if vAR_training_data:
-          #time.sleep(5)
           if vAR_testing_data is not None:
             if vAR_testing_data.type == 'application/vnd.ms-excel' or 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
               if button_test:
                 testing()
 
-vAR_st.markdown("""---""")
 
+
+vAR_st.markdown("""---""")
 if choice == "Home":
   vAR_st.subheader("Go to the Menu")
 
@@ -400,15 +507,6 @@ if choice == "Data visualization":
 if choice == "Deploy the Model":
   vAR_st.subheader("To Deploy the Model")
   vAR_st.button("Click here", key="9")
-
-if choice == "Source Code":
-  if vAR_problem != '':
-    if vAR_type != '':
-      if vAR_model != '':
-        if vAR_training_data:
-          if vAR_testing_data is not None:
-            if vAR_testing_data.type == 'application/vnd.ms-excel' or 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
-              code()
 
 
 library = ["Library Used","Streamlit","Pandas","IPython.display","sklearn.linear_model"]
