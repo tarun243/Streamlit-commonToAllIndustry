@@ -26,6 +26,14 @@ div.stButton > button:first-child {
 }
 </style>""", unsafe_allow_html=True)
 
+
+vAR_st.markdown("""
+<style>
+div.stButton > button:first-child { border: 1px solid; width: 55%; }
+</style>""", unsafe_allow_html=True)
+
+
+
 components.html("""<hr style="height:2px;border:none;color:#333;background-color:#333;" /> """)
 
 #@vAR_st.cache(suppress_st_warning=True)
@@ -139,7 +147,7 @@ def code():
 
 menu = ["Home","Model Validation","Download Model Outcome","Data visualization","Deploy the Model","Source Code"]
 choice = vAR_st.sidebar.selectbox("Menu",menu)
-col1, col2, col3, col4, col5 = vAR_st.columns([0.5,1.5,2,0.5,1])
+col1, col2, col3, col4, col5 = vAR_st.columns([0.5,1.5,2.75,0.5,1])
 with col2:
     vAR_st.write('')
     vAR_st.write('')
@@ -149,7 +157,7 @@ with col3:
 
 
 
-col1, col2, col3, col4, col5 = vAR_st.columns([0.5,1.5,2,0.5,1])
+col1, col2, col3, col4, col5 = vAR_st.columns([0.5,1.5,2.75,0.5,1])
 with col2:
   if vAR_problem != '':
     vAR_st.write('')
@@ -161,7 +169,7 @@ with col3:
 
 
 
-col1, col2, col3, col4, col5 = vAR_st.columns([0.5,1.5,2,0.5,1])
+col1, col2, col3, col4, col5 = vAR_st.columns([0.5,1.5,2.75,0.5,1])
 with col2:
   if vAR_problem != '':
     if vAR_type != '':
@@ -176,7 +184,7 @@ with col3:
 
 
 vAR_st.write('')
-col1, col2, col3, col4, col5 = vAR_st.columns([0.5,1.5,2,0.5,1])
+col1, col2, col3, col4, col5 = vAR_st.columns([0.5,1.5,2.75,0.5,1])
 with col2:
   if vAR_problem != '':
     if vAR_type != '':
@@ -210,7 +218,7 @@ with col5:
 
 
 
-col1, col2, col3, col4 = vAR_st.columns([0.5,1.5,2.5,1])
+col1, col2, col3, col4, col5 = vAR_st.columns([0.5,1.5,2.75,0.5,1])
 with col3:
   if vAR_problem != '':
     if vAR_type != '':
@@ -228,7 +236,7 @@ with col3:
 
 
 
-col1, col2, col3, col4, col5 = vAR_st.columns([0.5,1.5,2,0.5,1])
+col1, col2, col3, col4, col5 = vAR_st.columns([0.5,1.5,2.75,0.5,1])
 with col2:
   if vAR_problem != '':
     if vAR_type != '':
@@ -267,7 +275,7 @@ with col4:
 
 
 
-col1, col2, col3, col4, col5 = vAR_st.columns([0.5,1.5,2,0.5,1])
+col1, col2, col3, col4, col5 = vAR_st.columns([0.5,1.5,2.75,0.5,1])
 with col2:
   if vAR_problem != '':
     if vAR_type != '':
@@ -291,7 +299,7 @@ with col3:
 
 
 vAR_st.write('')
-col1, col2, col3, col4, col5 = vAR_st.columns([0.5,1.5,2,0.5,1])
+col1, col2, col3, col4, col5 = vAR_st.columns([0.5,1.5,2.75,0.5,1])
 with col2:
   if vAR_problem != '':
     if vAR_type != '':
@@ -335,8 +343,7 @@ with col5:
               vAR_st.write('Upload CSV file you uploaded',vAR_testing_data.type)
 
 
-
-col1, col2, col3, col4 = vAR_st.columns([0.5,1.5,2.5,1])
+col1, col2, col3, col4, col5 = vAR_st.columns([0.5,1.5,2.75,0.5,1])
 with col3:
   if vAR_problem != '':
     if vAR_type != '':
