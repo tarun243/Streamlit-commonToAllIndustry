@@ -374,7 +374,7 @@ with col2:
     if vAR_type != '':
       if vAR_model != '':
         if vAR_training_data:
-          #time.sleep(10)
+          time.sleep(10)
           vAR_st.write('')
           vAR_st.write('')
           vAR_st.markdown('#')
