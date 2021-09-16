@@ -595,4 +595,4 @@ if vAR_st.sidebar.button('Clear/Refresh'):
   js = "window.location.herf = 'http://localhost:8501/'"
   html = '<img src onerror="{}">'.format(js)
   div = Div(text=html)
-  vAR_st.bokeh_chart(div)
+  vAR_st.bokeh_chart(div)      
