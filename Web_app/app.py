@@ -11,14 +11,16 @@ vAR_st.set_page_config(layout="wide")
 #for having the logo and title in the same line we use vAR.st_beta_columns() and make the ratio accordingly 
 vAR_logo, vAR_title = vAR_st.columns((6,50))
 with vAR_logo:
-  vAR_st.image('https://raw.githubusercontent.com/DeepsphereAI/Streamlit-CommonToAllIndustry/master/Web_app/logo.jpg', width = 110)
+  vAR_st.image('https://raw.githubusercontent.com/DeepsphereAI/Streamlit-CommonToAllIndustry/master/Web_app/logo.jpg', width = 90)
 with vAR_title:
 #setting font size and colour for the title 
   
 #by this text-align: centre, we can align the title to the centre of the page
-  vAR_st.markdown("<h1 style='text-align: center; color: green;'>Develop Enterprise-Grade Data Science Web Applications Using Streamlit</h1>", unsafe_allow_html=True)
+  vAR_st.markdown("<h1 style='text-align: center; color: green; font-size:28px;'>Industry Science Data Science Applications for Enterprise</h1>", unsafe_allow_html=True)
 
-#To customize the background colour of the submit button  
+  vAR_st.markdown("<h1 style='text-align: center; color: green; font-size:28px;'>Powered by Streamlit</h1>", unsafe_allow_html=True)
+
+ #To customize the background colour of the submit button  
 m = vAR_st.markdown("""
 <style>
 div.stButton > button:first-child {
@@ -179,7 +181,7 @@ with col2:
     vAR_st.write('')
     vAR_st.subheader("Problem Statement")
 with col3:
-    vAR_problem = vAR_st.selectbox('',('','why','when','what'),index=0)
+    vAR_problem = vAR_st.selectbox('',('','Customer Churn: Who is going to churn?','Customer Churn: When will the churn occur?','Customer Churn: Why does the churn occurs?'),index=0)
 
 
 
@@ -191,7 +193,7 @@ with col2:
     vAR_st.subheader("Problem type")
 with col3:
   if vAR_problem != '':
-    vAR_type = vAR_st.selectbox('',('','Linear Regression','Nonlinear Regression','Bayesian Linear Regression'),index=0)
+    vAR_type = vAR_st.selectbox('',('','Classification','Regression','Clustering','Continued Decision Making'),index=0)
 
 
 
@@ -205,7 +207,7 @@ with col2:
 with col3:
   if vAR_problem != '':
     if vAR_type != '':
-      vAR_model = vAR_st.selectbox('',('','Random train/test splits','Cross-Validation','Bootstrap'),index=0)
+      vAR_model = vAR_st.selectbox('',('','Decision Tree','Random Forest','Logistics Regression','Linear Regression','K Means Clustering'),index=0)
 with col5:
   if vAR_problem != '':
     if vAR_type != '':
@@ -494,19 +496,30 @@ if choice == "Home":
 
 if choice == "Model Validation":
   vAR_st.subheader("Model Validation")
-  vAR_st.button("Click here", key="6")
+  col1, col2, col4 = vAR_st.columns([2,4,4])
+  with col1:
+    vAR_st.button("Click here", key="6")
 
 if choice == "Download Model Outcome":
   vAR_st.subheader("To Download the Model Outcome")
-  vAR_st.button("Click here", key="7")
+  col1, col2, col4 = vAR_st.columns([2,4,4])
+  with col1:
+    vAR_st.button("Click here", key="7")
 
 if choice == "Data visualization":
   vAR_st.subheader("Data visualization")
-  vAR_st.button("Click here", key="8")
+  col1, col2, col4 = vAR_st.columns([2,4,4])
+  with col1:
+    vAR_st.button("Click here", key="8")
 
 if choice == "Deploy the Model":
   vAR_st.subheader("To Deploy the Model")
-  vAR_st.button("Click here", key="9")
+  col1, col2, col4 = vAR_st.columns([2,4,4])
+  with col1:
+    button_download = vAR_st.button("Click here", key="9")
+    #if button_download:
+
+
 
 
 library = ["Library Used","Streamlit","Pandas","IPython.display","sklearn.linear_model"]
@@ -515,3 +528,8 @@ lib = vAR_st.sidebar.selectbox(" ",library)
 
 services = ["GCP Services Used","VM Instance","Compute Engine"]
 gcp = vAR_st.sidebar.selectbox(" ",services)
+
+
+from bokeh.models.widgets import Div
+if vAR_st.sidebar.button('Clear/Refresh'):
+  js = "window.location.herf = 'http://localhost:8501/'"
