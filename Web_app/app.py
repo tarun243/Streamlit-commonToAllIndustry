@@ -4,6 +4,8 @@ import pandas as pd
 from IPython.display import HTML
 from sklearn.linear_model import LogisticRegression 
 import time
+import base64 
+timestr = time.strftime("%Y%m%d-%H%M%S")
 
 #for Setting the page layout to wide
 vAR_st.set_page_config(layout="wide")
@@ -16,9 +18,9 @@ with vAR_title:
 #setting font size and colour for the title 
   
 #by this text-align: centre, we can align the title to the centre of the page
-  vAR_st.markdown("<h1 style='text-align: center; color: green; font-size:28px;'>Industry Science Data Science Applications for Enterprise</h1>", unsafe_allow_html=True)
+  vAR_st.markdown("<h1 style='text-align: center; color: green; font-size:29px;'>Industry Science - Data Science Applications for Enterprise</h1>", unsafe_allow_html=True)
 
-  vAR_st.markdown("<h1 style='text-align: center; color: green; font-size:28px;'>Powered by Streamlit</h1>", unsafe_allow_html=True)
+  vAR_st.markdown("<h1 style='text-align: center; color: green; font-size:29px;'>Powered by Streamlit</h1>", unsafe_allow_html=True)
 
  #To customize the background colour of the submit button  
 m = vAR_st.markdown("""
@@ -34,13 +36,16 @@ vAR_st.markdown("""
 div.stButton > button:first-child { border: 1px solid; width: 55%; }
 </style>""", unsafe_allow_html=True)
 
-components.html("""<hr style="height:2px;border:none;color:#333;background-color:#333;" /> """)
 
-#@vAR_st.cache(suppress_st_warning=True)
-def local_css(file_name):
-    with open(file_name) as f:
-        vAR_st.markdown('<style>{}</style>'.format(f.read()), unsafe_allow_html=True)
-#local_css("style.css")
+vAR_st.markdown("""
+<hr style="width:100%;height:3px;background-color:gray;border-width:10">
+""", unsafe_allow_html=True)
+
+
+vAR_st.markdown("""<style>.css-17eq0hr {
+    background-color: #4c85e4;
+}
+</style>""", unsafe_allow_html=True)
 
 
 def training():
@@ -142,6 +147,8 @@ def test_code():
     vAR_st.write(table_7)
 
 
+
+
 def train_code():
   with vAR_st.echo():
     def training():
@@ -159,6 +166,52 @@ def train_code():
       #model training 
       model = LogisticRegression()
       model_training = model.fit(training_data_features,training_data_label)
+
+def download():
+
+  #training dataset
+  training_data = df_training 
+  training_data_features = training_data[['Quantity','Price','Service Call','Service Failure Rate%','Customer Lifetime(Days)']]
+            
+  #feature selection for training
+  training_data_features = training_data_features[['Customer Lifetime(Days)']]
+
+  #Label for Training
+  training_data_label = training_data[['Churn']]
+
+  #model training 
+  model = LogisticRegression()
+  model_training = model.fit(training_data_features,training_data_label)
+
+  #Test Dataset
+  test_data = df_testing
+
+  #Feature Selection for Model Testing
+  test_data_features = test_data[['Customer Lifetime(Days)']]
+  test_data_features = training_data_features[['Customer Lifetime(Days)']]
+
+  #Model Testing
+  model_testing = model.predict(test_data_features)
+  model_prediction = pd.DataFrame(model_testing)
+  model_prediction = pd.DataFrame(model_testing,columns=['Churn Prediction'])
+
+  prediction_result = test_data.merge(model_prediction,left_index=True,right_index=True)
+  vAR_st.write('')
+
+  #Getting the Probability of Churn
+  prediction_result_probability_all_features = model.predict_proba(test_data_features)
+  prediction_result_probability_all_features = pd.DataFrame(prediction_result_probability_all_features,
+    columns=['Probability of Non Churn', 'Probability of Churn'])
+  churn_probability = prediction_result.merge(prediction_result_probability_all_features,
+    left_index=True,right_index=True)
+
+  csvfile = churn_probability.to_csv()
+  b64 = base64.b64encode(csvfile.encode()).decode()
+  vAR_filename = "new_text_file_{}_.csv".format(timestr)
+  #vAR_st.markdown("#### Download File ###")
+  href = f'<a href="data:file/csv;base64,{b64}" download="{vAR_filename}">Download File!!</a>'
+  vAR_st.markdown(href,unsafe_allow_html=True)
+  
 
 
 def feature():
@@ -376,7 +429,7 @@ with col2:
     if vAR_type != '':
       if vAR_model != '':
         if vAR_training_data:
-          time.sleep(10)
+          #time.sleep(10)
           vAR_st.write('')
           vAR_st.write('')
           vAR_st.markdown('#')
@@ -487,10 +540,13 @@ with col2:
             if vAR_testing_data.type == 'application/vnd.ms-excel' or 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
               if button_test:
                 testing()
+vAR_st.markdown('#')
+vAR_st.markdown("""
+<hr style="width:100%;height:3px;background-color:gray">
+""", unsafe_allow_html=True)
 
 
-
-vAR_st.markdown("""---""")
+#vAR_st.markdown("""---""")
 if choice == "Home":
   vAR_st.subheader("Go to the Menu")
 
@@ -504,7 +560,16 @@ if choice == "Download Model Outcome":
   vAR_st.subheader("To Download the Model Outcome")
   col1, col2, col4 = vAR_st.columns([2,4,4])
   with col1:
-    vAR_st.button("Click here", key="7")
+    if vAR_problem != '':
+      if vAR_type != '':
+        if vAR_model != '':
+          if vAR_training_data:
+            if vAR_testing_data is not None:
+              if vAR_testing_data.type == 'application/vnd.ms-excel' or 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
+                button_download = vAR_st.button("Click here", key="9")
+                if button_download:
+                  download()
+                
 
 if choice == "Data visualization":
   vAR_st.subheader("Data visualization")
@@ -514,11 +579,6 @@ if choice == "Data visualization":
 
 if choice == "Deploy the Model":
   vAR_st.subheader("To Deploy the Model")
-  col1, col2, col4 = vAR_st.columns([2,4,4])
-  with col1:
-    button_download = vAR_st.button("Click here", key="9")
-    #if button_download:
-
 
 
 
@@ -532,4 +592,7 @@ gcp = vAR_st.sidebar.selectbox(" ",services)
 
 from bokeh.models.widgets import Div
 if vAR_st.sidebar.button('Clear/Refresh'):
-  js = "window.location.herf = 'https://share.streamlit.io/deepsphereai/streamlit-commontoallindustry/Web_app/app.py'"
+  js = "window.location.herf = 'http://localhost:8501/'"
+  html = '<img src onerror="{}">'.format(js)
+  div = Div(text=html)
+  vAR_st.bokeh_chart(div)
