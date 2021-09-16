@@ -558,7 +558,7 @@ if choice == "Model Validation":
 
 if choice == "Download Model Outcome":
   vAR_st.subheader("To Download the Model Outcome")
-  col1, col2, col4 = vAR_st.columns([2,4,4])
+  col1, col2, col4 = vAR_st.columns([3,4,4])
   with col1:
     if vAR_problem != '':
       if vAR_type != '':
