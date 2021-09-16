@@ -532,4 +532,4 @@ gcp = vAR_st.sidebar.selectbox(" ",services)
 
 from bokeh.models.widgets import Div
 if vAR_st.sidebar.button('Clear/Refresh'):
-  js = "window.location.herf = 'http://localhost:8501/'"
+  js = "window.location.herf = 'https://share.streamlit.io/deepsphereai/streamlit-commontoallindustry/Web_app/app.py'"
