@@ -18,9 +18,9 @@ with vAR_title:
 #setting font size and colour for the title 
   
 #by this text-align: centre, we can align the title to the centre of the page
-  vAR_st.markdown("<h1 style='text-align: center; color: green; font-size:29px;'>Industry Science - Data Science Applications for Enterprise</h1>", unsafe_allow_html=True)
-
-  vAR_st.markdown("<h1 style='text-align: center; color: green; font-size:29px;'>Powered by Streamlit</h1>", unsafe_allow_html=True)
+  vAR_st.markdown("<h1 style='text-align: center; color: black; font-size:29px;'>Learn to Build Industry Standard Data Science Applications </h1>", unsafe_allow_html=True)
+  vAR_st.write('')
+  vAR_st.markdown("<h1 style='text-align: center; color: blue; font-size:29px;'>Powered by Streamlit and Google Cloud</h1>", unsafe_allow_html=True)
 
  #To customize the background colour of the submit button  
 m = vAR_st.markdown("""
@@ -429,7 +429,7 @@ with col2:
     if vAR_type != '':
       if vAR_model != '':
         if vAR_training_data:
-          #time.sleep(10)
+          time.sleep(10)
           vAR_st.write('')
           vAR_st.write('')
           vAR_st.markdown('#')
@@ -589,10 +589,12 @@ lib = vAR_st.sidebar.selectbox(" ",library)
 services = ["GCP Services Used","VM Instance","Compute Engine"]
 gcp = vAR_st.sidebar.selectbox(" ",services)
 
-
+vAR_st.write('')
+vAR_st.write('')
+vAR_st.write('')
 from bokeh.models.widgets import Div
 if vAR_st.sidebar.button('Clear/Refresh'):
-  js = "window.location.herf = 'http://localhost:8501/'"
+  js = "window.location.href = 'http://localhost:8501/'"
   html = '<img src onerror="{}">'.format(js)
   div = Div(text=html)
-  vAR_st.bokeh_chart(div)      
+  vAR_st.bokeh_chart(div)
