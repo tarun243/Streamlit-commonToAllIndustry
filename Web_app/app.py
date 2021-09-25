@@ -10,6 +10,9 @@ from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.linear_model import LinearRegression
 from sklearn.cluster import KMeans
+import matplotlib.pyplot as plt
+from plotly.offline import iplot
+import plotly.graph_objects as go
 
 
 #for Setting the page layout to wide
@@ -237,6 +240,45 @@ def test_code_ran():
     table_7 = HTML(churn_probability.to_html(col_space=None,max_rows=10,max_cols=6))
     vAR_st.write(table_7)
 
+def visual_graphs(method):
+
+  #training dataset
+  training_data = df_training 
+  training_data_features = training_data[['Quantity','Price','Service Call','Service Failure Rate%','Customer Lifetime(Days)']]
+
+  #feature selection for training
+  training_data_features = training_data_features[['Customer Lifetime(Days)']]
+
+  #Label for Training
+  training_data_label = training_data[['Churn']]
+
+  #model training 
+  model = method()
+  model_training = model.fit(training_data_features,training_data_label)
+
+  #Test Dataset
+  test_data = df_testing
+
+  #Feature Selection for Model Testing
+  test_data_features = test_data[['Customer Lifetime(Days)']]
+  test_data_features = training_data_features[['Customer Lifetime(Days)']]
+
+  #Model Testing
+  model_testing = model.predict(test_data_features)
+  model_prediction = pd.DataFrame(model_testing)
+  model_prediction = pd.DataFrame(model_testing,columns=['Churn Prediction'])
+
+  prediction_result = test_data.merge(model_prediction,left_index=True,right_index=True)
+  vAR_st.write('')
+
+  #Getting the Probability of Churn
+  prediction_result_probability_all_features = model.predict_proba(test_data_features)
+  prediction_result_probability_all_features = pd.DataFrame(prediction_result_probability_all_features,
+    columns=['Probability of Non Churn', 'Probability of Churn'])
+  churn_probability = prediction_result.merge(prediction_result_probability_all_features,
+    left_index=True,right_index=True)
+  #table_7 = HTML(churn_probability.to_html(col_space=None,max_rows=10,max_cols=7))
+  return churn_probability;
 
 def train_code_ran():
   with vAR_st.echo():
@@ -361,6 +403,40 @@ def download(method):
   href = f'<a href="data:file/csv;base64,{b64}" download="{vAR_filename}">Download!!</a>'
   vAR_st.markdown(href,unsafe_allow_html=True)
   
+def visual_3(data):
+  ch = data['Churn Prediction'].value_counts()
+  gen = data['Gender'].value_counts()
+  m = data['Gender'].tolist().count('Male')
+  f = data['Gender'].tolist().count('Female')
+  no = data['Churn Prediction'].tolist().count(0)
+  yes = data['Churn Prediction'].tolist().count(1)
+  fig = go.Figure(
+    data=[go.Bar(name='gender', x=data['Gender'], y=data['Churn Prediction'])],
+    layout=go.Layout(
+      title=go.layout.Title(text="A Figure Specified By A Graph Object")))
+  vAR_st.plotly_chart(fig)
+
+
+def visual_12(data):
+  ch = data['Churn Prediction'].value_counts()
+  gen = data['Gender'].value_counts()
+  m = data['Gender'].tolist().count('Male')
+  f = data['Gender'].tolist().count('Female')
+  no = data['Churn Prediction'].tolist().count(0)
+  yes = data['Churn Prediction'].tolist().count(1)
+  labels = 'Female', 'Male'
+  sizes = [f, m]
+  explode = (0, 0.1)
+  fig1, ax1 = plt.subplots()
+  ax1.pie(sizes, explode=explode, labels=labels, autopct='%1.1f%%',shadow=True, startangle=90)
+  vAR_st.pyplot(fig1)
+
+  labels = 'Non Churn', 'Churn'
+  sizes = [no, yes]
+  explode = (0, 0.1)
+  fig1, ax1 = plt.subplots()
+  ax1.pie(sizes, explode=explode, labels=labels, autopct='%1.1f%%',shadow=True, startangle=90)
+  vAR_st.pyplot(fig1)
 
 
 def feature():
@@ -796,9 +872,51 @@ if choice == "Download Model Outcome":
 
 if choice == "Data visualization":
   vAR_st.subheader("Data visualization")
-  col1, col2, col4 = vAR_st.columns([2,4,4])
+  col1, col2, col4 = vAR_st.columns([4,4,4])
   with col1:
-    vAR_st.button("Click here", key="8")
+    if vAR_problem != '':
+      if vAR_type != '':
+        if vAR_model != '':
+          if vAR_training_data:
+            if vAR_testing_data is not None:
+              if vAR_testing_data.type == 'application/vnd.ms-excel' or 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
+                visual_button = vAR_st.button("Visual Charts", key="8")
+                if visual_button:   
+                  if vAR_model == "Random Forest":
+                    method = RandomForestClassifier
+                    data = visual_graphs(method)
+                    visual_12(data)
+                  elif vAR_model == "Logistic Regression":
+                    method = LogisticRegression
+                    data = visual_graphs(method)
+                    visual_12(data)
+                  elif vAR_model == "Decision Tree":
+                    method = DecisionTreeClassifier
+                    data = visual_graphs(method)
+                    visual_12(data)
+
+
+  with col2:
+    if vAR_problem != '':
+      if vAR_type != '':
+        if vAR_model != '':
+          if vAR_training_data:
+            if vAR_testing_data is not None:
+              if vAR_testing_data.type == 'application/vnd.ms-excel' or 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
+                if visual_button:   
+                  if vAR_model == "Random Forest":
+                    method = RandomForestClassifier
+                    data = visual_graphs(method)
+                    visual_3(data)
+                  elif vAR_model == "Logistic Regression":
+                    method = LogisticRegression
+                    data = visual_graphs(method)
+                    visual_3(data)
+                  elif vAR_model == "Decision Tree":
+                    method = DecisionTreeClassifier
+                    data = visual_graphs(method)
+                    visual_3(data)
+
 
 if choice == "Deploy the Model":
   vAR_st.subheader("To Deploy the Model")
