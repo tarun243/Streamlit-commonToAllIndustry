@@ -14,7 +14,6 @@ import matplotlib.pyplot as plt
 from plotly.offline import iplot
 import plotly.graph_objects as go
 
-
 #for Setting the page layout to wide
 vAR_st.set_page_config(layout="wide")
 
@@ -67,19 +66,10 @@ div.stButton > button:first-child {border: 1px solid; width: 55%;
 }
 </style>""", unsafe_allow_html=True)
 
-
-#for .css file
-# def local_css(file_name):
-#     with open(file_name) as f:
-#         vAR_st.markdown('<style>{}</style>'.format(f.read()), unsafe_allow_html=True)
-# local_css("style.css")
-
-
 #for horizontal line
 vAR_st.markdown("""
 <hr style="width:100%;height:3px;background-color:gray;border-width:10">
 """, unsafe_allow_html=True)
-
 
 
 
@@ -181,6 +171,45 @@ def test_code_log():
     table_7 = HTML(churn_probability.to_html(col_space=None,max_rows=10,max_cols=6))
     vAR_st.write(table_7)
 
+def visual_graphs(method):
+
+  #training dataset
+  training_data = df_training 
+  training_data_features = training_data[['Quantity','Price','Service Call','Service Failure Rate%','Customer Lifetime(Days)']]
+
+  #feature selection for training
+  training_data_features = training_data_features[['Customer Lifetime(Days)']]
+
+  #Label for Training
+  training_data_label = training_data[['Churn']]
+
+  #model training 
+  model = method()
+  model_training = model.fit(training_data_features,training_data_label)
+
+  #Test Dataset
+  test_data = df_testing
+
+  #Feature Selection for Model Testing
+  test_data_features = test_data[['Customer Lifetime(Days)']]
+  test_data_features = training_data_features[['Customer Lifetime(Days)']]
+
+  #Model Testing
+  model_testing = model.predict(test_data_features)
+  model_prediction = pd.DataFrame(model_testing)
+  model_prediction = pd.DataFrame(model_testing,columns=['Churn Prediction'])
+
+  prediction_result = test_data.merge(model_prediction,left_index=True,right_index=True)
+  vAR_st.write('')
+
+  #Getting the Probability of Churn
+  prediction_result_probability_all_features = model.predict_proba(test_data_features)
+  prediction_result_probability_all_features = pd.DataFrame(prediction_result_probability_all_features,
+    columns=['Probability of Non Churn', 'Probability of Churn'])
+  churn_probability = prediction_result.merge(prediction_result_probability_all_features,
+    left_index=True,right_index=True)
+  #table_7 = HTML(churn_probability.to_html(col_space=None,max_rows=10,max_cols=7))
+  return churn_probability;
 
 def train_code_log():
   with vAR_st.echo():
@@ -240,45 +269,6 @@ def test_code_ran():
     table_7 = HTML(churn_probability.to_html(col_space=None,max_rows=10,max_cols=6))
     vAR_st.write(table_7)
 
-def visual_graphs(method):
-
-  #training dataset
-  training_data = df_training 
-  training_data_features = training_data[['Quantity','Price','Service Call','Service Failure Rate%','Customer Lifetime(Days)']]
-
-  #feature selection for training
-  training_data_features = training_data_features[['Customer Lifetime(Days)']]
-
-  #Label for Training
-  training_data_label = training_data[['Churn']]
-
-  #model training 
-  model = method()
-  model_training = model.fit(training_data_features,training_data_label)
-
-  #Test Dataset
-  test_data = df_testing
-
-  #Feature Selection for Model Testing
-  test_data_features = test_data[['Customer Lifetime(Days)']]
-  test_data_features = training_data_features[['Customer Lifetime(Days)']]
-
-  #Model Testing
-  model_testing = model.predict(test_data_features)
-  model_prediction = pd.DataFrame(model_testing)
-  model_prediction = pd.DataFrame(model_testing,columns=['Churn Prediction'])
-
-  prediction_result = test_data.merge(model_prediction,left_index=True,right_index=True)
-  vAR_st.write('')
-
-  #Getting the Probability of Churn
-  prediction_result_probability_all_features = model.predict_proba(test_data_features)
-  prediction_result_probability_all_features = pd.DataFrame(prediction_result_probability_all_features,
-    columns=['Probability of Non Churn', 'Probability of Churn'])
-  churn_probability = prediction_result.merge(prediction_result_probability_all_features,
-    left_index=True,right_index=True)
-  #table_7 = HTML(churn_probability.to_html(col_space=None,max_rows=10,max_cols=7))
-  return churn_probability;
 
 def train_code_ran():
   with vAR_st.echo():
@@ -533,6 +523,7 @@ with col3:
           from sklearn.cluster import KMeans
 
 
+
 vAR_st.write('')
 col1, col2, col3, col4, col5 = vAR_st.columns([0.25,1.5,2.75,0.25,1.75])
 with col2:
@@ -567,7 +558,6 @@ with col5:
             vAR_st.write('Upload CSV file you uploaded',vAR_training_data.type)
 
 
-
 col1, col2, col3, col4, col5 = vAR_st.columns([0.25,1.5,2.75,0.25,1.75])
 with col3:
   if vAR_problem != '':
@@ -591,6 +581,7 @@ if vAR_problem != '':
           if full_table_1:
             table_2 = HTML(df_training.to_html(col_space=None))
             vAR_st.write(table_2)           
+
 
 
 
@@ -645,6 +636,8 @@ if vAR_problem != '':
 
 
 
+
+
 vAR_st.write('') 
 col1, col2, col3, col4, col5 = vAR_st.columns([0.25,1.5,2.75,0.25,1.75])
 with col2:
@@ -695,7 +688,6 @@ if vAR_problem != '':
             train_code_ran()
           elif vAR_model == "Decision Tree":
             train_code_dec()
-
 
 
 vAR_st.write('')
@@ -830,12 +822,10 @@ with col2:
                   method = DecisionTreeClassifier
                   testing(method)
 
-
 vAR_st.markdown('#')
 vAR_st.markdown("""
 <hr style="width:100%;height:3px;background-color:gray">
 """, unsafe_allow_html=True)
-
 
 #vAR_st.markdown("""---""")
 if choice == "Home":
@@ -916,6 +906,7 @@ if choice == "Data visualization":
                     method = DecisionTreeClassifier
                     data = visual_graphs(method)
                     visual_3(data)
+
 
 
 if choice == "Deploy the Model":
