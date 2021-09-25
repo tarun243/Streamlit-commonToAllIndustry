@@ -7,3 +7,4 @@ openpyxl==3.0.7
 scikit-learn==0.24.2
 bokeh==2.3.3
 plotly
+seaborn
