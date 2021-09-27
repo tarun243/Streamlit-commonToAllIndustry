@@ -11,7 +11,6 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.linear_model import LinearRegression
 from sklearn.cluster import KMeans
 import matplotlib.pyplot as plt
-from plotly.offline import iplot
 import plotly.graph_objects as go
 
 #for Setting the page layout to wide
@@ -20,7 +19,7 @@ vAR_st.set_page_config(layout="wide")
 #for having the logo and title in the same line we use vAR.st_beta_columns() and make the ratio accordingly 
 vAR_logo, vAR_title = vAR_st.columns((6,50))
 with vAR_logo:
-  vAR_st.image('https://raw.githubusercontent.com/DeepsphereAI/Streamlit-CommonToAllIndustry/master/Web_app/logo.jpg', width = 90)
+  vAR_st.image('https://raw.githubusercontent.com/DeepsphereAI/Streamlit-CommonToAllIndustry/master/Web_app/logo.jpg', width = 150)
 with vAR_title:
 #setting font size and colour for the title 
   
@@ -38,12 +37,12 @@ vAR_st.markdown("""<style>.css-17eq0hr {
 </style>""", unsafe_allow_html=True)
 
 
-#for clear/reset button
-vAR_st.markdown("""<style>#root > div:nth-child(1) > div > div > div > div > section.css-1lcbmhc.e1fqkh3o0 > div.css-17eq0hr.e1fqkh3o1 > div.block-container.css-1gx893w.eknhn3m2 > div:nth-child(1) > div:nth-child(4)  
+
+vAR_st.markdown("""<style>#root > div:nth-child(1) > div > div > div > div > section.css-1lcbmhc.e1fqkh3o0 > div.css-17eq0hr.e1fqkh3o1 > div.block-container.css-1gx893w.eknhn3m2 > div:nth-child(1) > div:nth-child(5)  
 {
     background-color:rgb(47 236 106);  
     top: 200px; 
-    border: 1px solid; 
+    border: 0px solid; 
     padding: 10px;}
 </style>""", unsafe_allow_html=True)
 
@@ -51,7 +50,6 @@ vAR_st.markdown("""<style>#root > div:nth-child(1) > div > div > div > div > sec
 #for clear/reset button
 vAR_st.markdown("""<style>p, ol, ul, dl {
     margin: 0px 100px 1rem;
-    padding: 0px;
     font-size: 1rem;
     font-weight: 400;
 }
@@ -71,6 +69,12 @@ vAR_st.markdown("""
 <hr style="width:100%;height:3px;background-color:gray;border-width:10">
 """, unsafe_allow_html=True)
 
+
+
+# def local_css(file_name):
+#     with open(file_name) as f:
+#         vAR_st.markdown('<style>{}</style>'.format(f.read()), unsafe_allow_html=True)
+# local_css("style.css")
 
 
 def training(method):
@@ -389,37 +393,45 @@ def download(method):
   csvfile = churn_probability.to_csv()
   b64 = base64.b64encode(csvfile.encode()).decode()
   vAR_filename = "new_text_file_{}_.csv".format(timestr)
-  vAR_st.markdown("#### Download File ###")
+  #vAR_st.markdown("#### Download File ###")
   href = f'<a href="data:file/csv;base64,{b64}" download="{vAR_filename}">Download!!</a>'
   vAR_st.markdown(href,unsafe_allow_html=True)
   
-def visual_3(data):
-  ch = data['Churn Prediction'].value_counts()
-  gen = data['Gender'].value_counts()
-  m = data['Gender'].tolist().count('Male')
-  f = data['Gender'].tolist().count('Female')
-  no = data['Churn Prediction'].tolist().count(0)
-  yes = data['Churn Prediction'].tolist().count(1)
+
+def visual_5(data):
   fig = go.Figure(
-    data=[go.Bar(name='gender', x=data['Gender'], y=data['Churn Prediction'])],
+    data=[go.Scatter(
+      x=data['Service Start Date'],
+      y=cum,
+      marker_color='black'
+    )],
     layout=go.Layout(
-      title=go.layout.Title(text="A Figure Specified By A Graph Object")))
+      title=go.layout.Title(text="When the Churn Occurs")))
   vAR_st.plotly_chart(fig)
 
 
-def visual_12(data):
-  ch = data['Churn Prediction'].value_counts()
-  gen = data['Gender'].value_counts()
-  m = data['Gender'].tolist().count('Male')
-  f = data['Gender'].tolist().count('Female')
+def visual_4(data):
+  fig = go.Figure(
+    data=[go.Bar(
+      x=data['Reason for The customer to Churn / Non Churn'],
+      y=data['Churn Prediction']
+    )],
+    layout=go.Layout(
+      title=go.layout.Title(text="Reason for The Customer Churn")))
+  vAR_st.plotly_chart(fig)
+
+
+def visual_3(data):
+  fig = go.Figure(
+    data=[go.Bar(name='gender', x=data['Gender'], y=data['Churn Prediction'])],
+    layout=go.Layout(
+      title=go.layout.Title(text="Customer Churn Distribution by Gender")))
+  vAR_st.plotly_chart(fig)
+
+
+def visual_1(data):
   no = data['Churn Prediction'].tolist().count(0)
   yes = data['Churn Prediction'].tolist().count(1)
-  labels = 'Female', 'Male'
-  sizes = [f, m]
-  explode = (0, 0.1)
-  fig1, ax1 = plt.subplots()
-  ax1.pie(sizes, explode=explode, labels=labels, autopct='%1.1f%%',shadow=True, startangle=90)
-  vAR_st.pyplot(fig1)
 
   labels = 'Non Churn', 'Churn'
   sizes = [no, yes]
@@ -428,9 +440,21 @@ def visual_12(data):
   ax1.pie(sizes, explode=explode, labels=labels, autopct='%1.1f%%',shadow=True, startangle=90)
   vAR_st.pyplot(fig1)
 
+def visual_2(data):
+  m = data['Gender'].tolist().count('Male')
+  f = data['Gender'].tolist().count('Female')
+  labels = 'Female', 'Male'
+  sizes = [f, m]
+  explode = (0, 0.1)
+  fig1, ax1 = plt.subplots()
+  ax1.pie(sizes, explode=explode, labels=labels, autopct='%1.1f%%',shadow=True, startangle=90)
+  vAR_st.pyplot(fig1)
+
+
 
 def feature():
-  for col in df_training.columns:
+  features = df_training.drop(['CustomerID','Churn'], axis =1)
+  for col in features.columns:
     vAR_st.write(col)
 
 def feature_code():
@@ -477,7 +501,7 @@ with col5:
     if vAR_type != '':
       vAR_st.write('')
       vAR_st.write('')
-      model_selection_source_code = vAR_st.button('source code',key='13')
+      model_selection_source_code = vAR_st.button('Source Code',key='13')
 
 with col3:
   if vAR_problem != '':
@@ -489,38 +513,36 @@ with col3:
             if vAR_model == 'Decision Tree':
               import pandas as pd
               from sklearn.tree import DecisionTreeClassifier
+              import matplotlib.pyplot as plt
+              import plotly.graph_objects as go
         elif vAR_model == 'Random Forest':
           with vAR_st.echo():
             if vAR_model == 'Random Forest':
               import pandas as pd
               from sklearn.ensemble import RandomForestClassifier
+              import matplotlib.pyplot as plt
+              import plotly.graph_objects as go              
         elif vAR_model == 'Logistic Regression':
           with vAR_st.echo():
             if vAR_model == 'Logistic Regression':
               import pandas as pd
               from sklearn.linear_model import LogisticRegression
+              import matplotlib.pyplot as plt
+              import plotly.graph_objects as go              
         elif vAR_model == 'Linear Regression':
           with vAR_st.echo():
             if vAR_model == 'Linear Regression':
               import pandas as pd
               from sklearn.linear_model import LinearRegression
+              import matplotlib.pyplot as plt
+              import plotly.graph_objects as go              
         elif vAR_model == 'K Means Clustering':
           with vAR_st.echo():
             if vAR_model == 'K Means Clustering':
               import pandas as pd
               from sklearn.cluster import KMeans
-
-      else:
-        if vAR_model == 'Decision Tree':
-          from sklearn.tree import DecisionTreeClassifier
-        elif vAR_model == 'Random Forest':
-          from sklearn.ensemble import RandomForestClassifier
-        elif vAR_model == 'Logistic Regression':
-          from sklearn.linear_model import LogisticRegression
-        elif vAR_model == 'Linear Regression':
-          from sklearn.linear_model import LinearRegression
-        elif vAR_model == 'K Means Clustering':
-          from sklearn.cluster import KMeans
+              import matplotlib.pyplot as plt
+              import plotly.graph_objects as go              
 
 
 
@@ -606,18 +628,19 @@ with col5:
       if vAR_model != '':
         if vAR_training_data:
           vAR_st.write('')
-          feature_source_code = vAR_st.button('source code',key='12')
+          feature_source_code = vAR_st.button('Source Code',key='12')
 
 
 
-col1, col2, col3, col4, col5= vAR_st.columns([0.25,1.5,3.5,4.5,1.75])
+col1, col2, col3, col4, col5= vAR_st.columns([0.25,1.5,3.5,5,0.5])
 with col3:
   if vAR_problem != '':
     if vAR_type != '':
       if vAR_model != '':
         if vAR_training_data:
           if button_feature:
-            for i in range(len(df_training.columns)):
+            features = df_training.drop(['CustomerID','Churn'], axis =1)
+            for i in range(len(features.columns)):
               vAR_st.write('Feature ',i+1)    
 with col4:
   if vAR_problem != '':
@@ -672,7 +695,7 @@ with col5:
       if vAR_model != '':
         if vAR_training_data:
           vAR_st.write('')
-          train_source_code = vAR_st.button('source code',key="10")
+          train_source_code = vAR_st.button('Source Code',key="10")
 
 
 
@@ -782,7 +805,7 @@ with col5:
         if vAR_training_data:
           if vAR_testing_data is not None:
             if vAR_testing_data.type == 'application/vnd.ms-excel' or 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':             
-              test_source_code = vAR_st.button('source code',key="11")
+              test_source_code = vAR_st.button('Source Code',key="11")
 
 
 
@@ -839,30 +862,34 @@ if choice == "Model Validation":
 
 if choice == "Download Model Outcome":
   vAR_st.subheader("To Download the Model Outcome")
-  col1, col2, col4 = vAR_st.columns([2,4,4])
+
+  col1, col2, col3 = vAR_st.columns([2,4,1])
   with col1:
-    if vAR_problem != '':
-      if vAR_type != '':
-        if vAR_model != '':
-          if vAR_training_data:
-            if vAR_testing_data is not None:
-              if vAR_testing_data.type == 'application/vnd.ms-excel' or 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
-                button_download = vAR_st.button("Click here", key="9")
-                if button_download:
-                  if vAR_model == "Logistic Regression":
-                    method = LogisticRegression
-                    download(method)
-                  elif vAR_model == "Random Forest":
-                    method = RandomForestClassifier
-                    download(method)
-                  elif vAR_model == "Decision Tree":
-                    method = DecisionTreeClassifier
-                    download(method)
+    button_download = vAR_st.button("Click here", key="9")
+  if vAR_problem != '':
+    if vAR_type != '':
+      if vAR_model != '':
+        if vAR_training_data:
+          if vAR_testing_data is not None:
+            if vAR_testing_data.type == 'application/vnd.ms-excel' or 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
+              if button_download:
+                if vAR_model == "Logistic Regression":
+                  method = LogisticRegression
+                  download(method)
+                elif vAR_model == "Random Forest":
+                  method = RandomForestClassifier
+                  download(method)
+                elif vAR_model == "Decision Tree":
+                  method = DecisionTreeClassifier
+                  download(method)
                 
 
 if choice == "Data visualization":
   vAR_st.subheader("Data visualization")
-  col1, col2, col4 = vAR_st.columns([4,4,4])
+  col1, col2, col3 = vAR_st.columns([2,4,1])
+  with col1:
+    visual_button = vAR_st.button("Visual Charts", key="8")
+  col1, col2, col3 = vAR_st.columns([2,1,2])
   with col1:
     if vAR_problem != '':
       if vAR_type != '':
@@ -870,22 +897,43 @@ if choice == "Data visualization":
           if vAR_training_data:
             if vAR_testing_data is not None:
               if vAR_testing_data.type == 'application/vnd.ms-excel' or 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
-                visual_button = vAR_st.button("Visual Charts", key="8")
                 if visual_button:   
                   if vAR_model == "Random Forest":
                     method = RandomForestClassifier
                     data = visual_graphs(method)
-                    visual_12(data)
+                    visual_1(data)
                   elif vAR_model == "Logistic Regression":
                     method = LogisticRegression
                     data = visual_graphs(method)
-                    visual_12(data)
+                    visual_1(data)
                   elif vAR_model == "Decision Tree":
                     method = DecisionTreeClassifier
                     data = visual_graphs(method)
-                    visual_12(data)
+                    visual_1(data)
 
 
+  with col3:
+    if vAR_problem != '':
+      if vAR_type != '':
+        if vAR_model != '':
+          if vAR_training_data:
+            if vAR_testing_data is not None:
+              if vAR_testing_data.type == 'application/vnd.ms-excel' or 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
+                if visual_button:   
+                  if vAR_model == "Random Forest":
+                    method = RandomForestClassifier
+                    data = visual_graphs(method)
+                    visual_2(data)
+                  elif vAR_model == "Logistic Regression":
+                    method = LogisticRegression
+                    data = visual_graphs(method)
+                    visual_2(data)
+                  elif vAR_model == "Decision Tree":
+                    method = DecisionTreeClassifier
+                    data = visual_graphs(method)
+                    visual_2(data)
+
+  col1, col2, col3 = vAR_st.columns([1,3,1])
   with col2:
     if vAR_problem != '':
       if vAR_type != '':
@@ -897,26 +945,38 @@ if choice == "Data visualization":
                   if vAR_model == "Random Forest":
                     method = RandomForestClassifier
                     data = visual_graphs(method)
+                    ch = data['Churn Prediction']
+                    cum = ch.cumsum()
                     visual_3(data)
+                    visual_4(data)
+                    visual_5(data)
                   elif vAR_model == "Logistic Regression":
                     method = LogisticRegression
                     data = visual_graphs(method)
+                    ch = data['Churn Prediction']
+                    cum = ch.cumsum()
                     visual_3(data)
+                    visual_4(data)        
+                    visual_5(data)
                   elif vAR_model == "Decision Tree":
                     method = DecisionTreeClassifier
                     data = visual_graphs(method)
+                    ch = data['Churn Prediction']
+                    cum = ch.cumsum()
                     visual_3(data)
-
+                    visual_4(data)
+                    visual_5(data)
 
 
 if choice == "Deploy the Model":
   vAR_st.subheader("To Deploy the Model")
 
 
-
 library = ["Library Used","Streamlit","Pandas","IPython.display","sklearn.linear_model"]
 lib = vAR_st.sidebar.selectbox(" ",library)
 
+models_implemented = ['Models Implemented','Decision Tree','Random Forest','Logistic Regression']
+mi = vAR_st.sidebar.selectbox(" ",models_implemented)
 
 services = ["GCP Services Used","VM Instance","Compute Engine"]
 gcp = vAR_st.sidebar.selectbox(" ",services)
