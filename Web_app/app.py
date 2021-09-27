@@ -982,5 +982,5 @@ services = ["GCP Services Used","VM Instance","Compute Engine"]
 gcp = vAR_st.sidebar.selectbox(" ",services)
 
 
-href = f'<a style="color:black;" href="http://localhost:8501/" class="button">Clear/Reset</a>'
+href = f'<a style="color:black;" href="https://share.streamlit.io/tarun243/streamlit-commontoallindustry/Web_app/app.py/" class="button">Clear/Reset</a>'
 vAR_st.sidebar.markdown(href, unsafe_allow_html=True)
