@@ -11,4 +11,4 @@ scikit-learn==0.24.2
 streamlit==0.86.0
 urllib3==1.26.6
 widgetsnbextension==3.5.1
-
+plotly==5.3.1
