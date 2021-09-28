@@ -16,9 +16,9 @@ import plotly.graph_objects as go
 #for Setting the page layout to wide
 vAR_st.set_page_config(layout="wide")
 
-col1, col2, col3 = vAR_st.columns([2,3,3])
+col1, col2, col3 = vAR_st.columns([3,3,3])
 with col2:
-  vAR_st.image('https://raw.githubusercontent.com/tarun243/Streamlit-commonToAllIndustry/master/Web_app/Logo_final.png',width=500)
+  vAR_st.image('https://raw.githubusercontent.com/tarun243/Streamlit-commonToAllIndustry/master/Web_app/Logo_final.png')
 
 #setting font size and colour for the title 
 #by this text-align: centre, we can align the title to the centre of the page
