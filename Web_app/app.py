@@ -16,23 +16,21 @@ import plotly.graph_objects as go
 #for Setting the page layout to wide
 vAR_st.set_page_config(layout="wide")
 
-#for having the logo and title in the same line we use vAR.st_beta_columns() and make the ratio accordingly 
-vAR_logo, vAR_title = vAR_st.columns((6,50))
-with vAR_logo:
-  vAR_st.image('https://raw.githubusercontent.com/DeepsphereAI/Streamlit-CommonToAllIndustry/master/Web_app/logo.jpg', width = 150)
-with vAR_title:
+col1, col2, col3 = vAR_st.columns([2,3,3])
+with col2:
+  vAR_st.image('https://raw.githubusercontent.com/tarun243/Streamlit-commonToAllIndustry/master/Web_app/Logo_final.png',width=500)
+
 #setting font size and colour for the title 
-  
 #by this text-align: centre, we can align the title to the centre of the page
-  vAR_st.markdown("<h1 style='text-align: center; color: black; font-size:29px;'>Learn to Build Industry Standard Data Science Applications </h1>", unsafe_allow_html=True)
-  vAR_st.write('')
-  vAR_st.markdown("<h1 style='text-align: center; color: blue; font-size:29px;'>Powered by Streamlit and Google Cloud</h1>", unsafe_allow_html=True)
+vAR_st.markdown("<h1 style='text-align: center; color: black; font-size:29px;'>Learn to Build Industry Standard Data Science Applications </h1>", unsafe_allow_html=True)
+vAR_st.markdown("<h1 style='text-align: center; color: blue; font-size:29px;'>Powered by Streamlit and Google Cloud</h1>", unsafe_allow_html=True)
 
 
 
 #for background color of sidebar
 vAR_st.markdown("""<style>.css-17eq0hr {
     background-color: #4c85e4;
+    width: 19rem;
 }
 </style>""", unsafe_allow_html=True)
 
@@ -41,17 +39,23 @@ vAR_st.markdown("""<style>.css-17eq0hr {
 vAR_st.markdown("""<style>#root > div:nth-child(1) > div > div > div > div > section.css-1lcbmhc.e1fqkh3o0 > div.css-17eq0hr.e1fqkh3o1 > div.block-container.css-1gx893w.eknhn3m2 > div:nth-child(1) > div:nth-child(5)  
 {
     background-color:rgb(47 236 106);  
-    top: 200px; 
+    top: 40px; 
     border: 0px solid; 
-    padding: 10px;}
+    padding: 10px;
+    border-radius:3px; }
 </style>""", unsafe_allow_html=True)
 
 
 #for clear/reset button
 vAR_st.markdown("""<style>p, ol, ul, dl {
-    margin: 0px 100px 1rem;
+    margin: 0px 80px 1rem;
     font-size: 1rem;
     font-weight: 400;
+}
+</style>""", unsafe_allow_html=True)
+
+vAR_st.markdown("""<style>a {
+    text-decoration: none;
 }
 </style>""", unsafe_allow_html=True)
 
@@ -68,13 +72,6 @@ div.stButton > button:first-child {border: 1px solid; width: 55%;
 vAR_st.markdown("""
 <hr style="width:100%;height:3px;background-color:gray;border-width:10">
 """, unsafe_allow_html=True)
-
-
-
-# def local_css(file_name):
-#     with open(file_name) as f:
-#         vAR_st.markdown('<style>{}</style>'.format(f.read()), unsafe_allow_html=True)
-# local_css("style.css")
 
 
 def training(method):
@@ -402,7 +399,7 @@ def visual_5(data):
   fig = go.Figure(
     data=[go.Scatter(
       x=data['Service Start Date'],
-      y=cum,
+      y=cum_churn,
       marker_color='black'
     )],
     layout=go.Layout(
@@ -414,7 +411,7 @@ def visual_4(data):
   fig = go.Figure(
     data=[go.Bar(
       x=data['Reason for The customer to Churn / Non Churn'],
-      y=data['Churn Prediction']
+      y=data['Churn Prediction'],
     )],
     layout=go.Layout(
       title=go.layout.Title(text="Reason for The Customer Churn")))
@@ -502,7 +499,6 @@ with col5:
       vAR_st.write('')
       vAR_st.write('')
       model_selection_source_code = vAR_st.button('Source Code',key='13')
-
 with col3:
   if vAR_problem != '':
     if vAR_type != '':
@@ -650,14 +646,13 @@ with col4:
           if button_feature:
             feature()
 
+
 if vAR_problem != '':
   if vAR_type != '':
     if vAR_model != '':
       if vAR_training_data:
         if feature_source_code:
           feature_code()
-
-
 
 
 
@@ -668,7 +663,6 @@ with col2:
     if vAR_type != '':
       if vAR_model != '':
         if vAR_training_data:
-
           vAR_st.subheader("Model Engineering")
 with col3:
   if vAR_problem != '':
@@ -845,52 +839,49 @@ with col2:
                   method = DecisionTreeClassifier
                   testing(method)
 
-vAR_st.markdown('#')
-vAR_st.markdown("""
-<hr style="width:100%;height:3px;background-color:gray">
-""", unsafe_allow_html=True)
 
-#vAR_st.markdown("""---""")
+
+vAR_st.markdown('#')
 if choice == "Home":
-  vAR_st.subheader("Go to the Menu")
+  pass
 
 if choice == "Model Validation":
-  vAR_st.subheader("Model Validation")
-  col1, col2, col4 = vAR_st.columns([2,4,4])
-  with col1:
+  col1, col2, col3, col4, col5 = vAR_st.columns([0.25,1.5,2.75,0.25,1.75])
+  with col2:
+    vAR_st.subheader("Model Validation")
+  with col3:
     vAR_st.button("Click here", key="6")
 
 if choice == "Download Model Outcome":
-  vAR_st.subheader("To Download the Model Outcome")
-
-  col1, col2, col3 = vAR_st.columns([2,4,1])
-  with col1:
-    button_download = vAR_st.button("Click here", key="9")
-  if vAR_problem != '':
-    if vAR_type != '':
-      if vAR_model != '':
-        if vAR_training_data:
-          if vAR_testing_data is not None:
-            if vAR_testing_data.type == 'application/vnd.ms-excel' or 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
-              if button_download:
-                if vAR_model == "Logistic Regression":
-                  method = LogisticRegression
-                  download(method)
-                elif vAR_model == "Random Forest":
-                  method = RandomForestClassifier
-                  download(method)
-                elif vAR_model == "Decision Tree":
-                  method = DecisionTreeClassifier
-                  download(method)
+  col1, col2, col3, col4, col5 = vAR_st.columns([0.25,1.5,2.75,0.25,1.75])
+  with col2:  
+    vAR_st.subheader("Download Model Outcome")
+  with col3:
+    if vAR_problem != '':
+      if vAR_type != '':
+        if vAR_model != '':
+          if vAR_training_data is not None:
+            if vAR_testing_data is not None:
+              if vAR_testing_data.type == 'application/vnd.ms-excel' or 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
+                button_download = vAR_st.button("Click here", key="9")
+                if button_download:
+                  if vAR_model == "Logistic Regression":
+                    method = LogisticRegression
+                    download(method)
+                  elif vAR_model == "Random Forest":
+                    method = RandomForestClassifier
+                    download(method)
+                  elif vAR_model == "Decision Tree":
+                    method = DecisionTreeClassifier
+                    download(method)
                 
 
 if choice == "Data visualization":
-  vAR_st.subheader("Data visualization")
-  col1, col2, col3 = vAR_st.columns([2,4,1])
-  with col1:
+  col1, col2, col3, col4, col5 = vAR_st.columns([0.25,1.5,2.75,0.25,1.75])
+  with col2:  
+    vAR_st.subheader("Data visualization")
+  with col3:
     visual_button = vAR_st.button("Visual Charts", key="8")
-  col1, col2, col3 = vAR_st.columns([2,1,2])
-  with col1:
     if vAR_problem != '':
       if vAR_type != '':
         if vAR_model != '':
@@ -946,7 +937,7 @@ if choice == "Data visualization":
                     method = RandomForestClassifier
                     data = visual_graphs(method)
                     ch = data['Churn Prediction']
-                    cum = ch.cumsum()
+                    cum_churn = ch.cumsum()
                     visual_3(data)
                     visual_4(data)
                     visual_5(data)
@@ -954,7 +945,7 @@ if choice == "Data visualization":
                     method = LogisticRegression
                     data = visual_graphs(method)
                     ch = data['Churn Prediction']
-                    cum = ch.cumsum()
+                    cum_churn = ch.cumsum()
                     visual_3(data)
                     visual_4(data)        
                     visual_5(data)
@@ -962,7 +953,7 @@ if choice == "Data visualization":
                     method = DecisionTreeClassifier
                     data = visual_graphs(method)
                     ch = data['Churn Prediction']
-                    cum = ch.cumsum()
+                    cum_churn = ch.cumsum()
                     visual_3(data)
                     visual_4(data)
                     visual_5(data)
@@ -978,7 +969,7 @@ lib = vAR_st.sidebar.selectbox(" ",library)
 models_implemented = ['Models Implemented','Decision Tree','Random Forest','Logistic Regression']
 mi = vAR_st.sidebar.selectbox(" ",models_implemented)
 
-services = ["GCP Services Used","VM Instance","Compute Engine"]
+services = ["GCP Services Used","VM Instance","Compute Engine",'Cloud Storage']
 gcp = vAR_st.sidebar.selectbox(" ",services)
 
 
