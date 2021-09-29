@@ -401,8 +401,9 @@ def visual_6(data):
     data=[go.Scatter(
       x=data['When the Churn Occurs'],
       y=cum_churn,
-      marker_color='black'
+      marker_color='#483D8B'
     )],
+
     layout=go.Layout(
       title=go.layout.Title(text="When the Churn Occurs")))
   fig.update_xaxes(
@@ -437,8 +438,8 @@ def visual_3(data):
 
 
     colors = ['lightslategray',] * 2
-    colors[0] = 'red'
-    colors[1] = 'crimson'
+    colors[0] = '#1E90FF'
+    colors[1] = '#9400D3'
     fig = go.Figure()
 
 
@@ -463,9 +464,9 @@ def visual_4(data):
 
 
     colors = ['lightslategray',] * 3
-    colors[0] = 'red'
-    colors[1] = 'crimson'
-    colors[2] = 'lightslategray'
+    colors[0] = '#00FA9A'
+    colors[1] = '#7B68EE'
+    colors[2] = '#708090'
     fig = go.Figure()
 
 
