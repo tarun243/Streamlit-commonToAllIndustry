@@ -417,7 +417,7 @@ def visual_5(data):
   fig = go.Figure(
     data=[go.Scatter(
       x=data['Service Start Date'],
-      y=percentage,
+      y=cum_churn,
       marker_color='black'
     )],
     layout=go.Layout(
