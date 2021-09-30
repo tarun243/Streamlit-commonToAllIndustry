@@ -407,10 +407,11 @@ def visual_6(data):
     layout=go.Layout(
       title=go.layout.Title(text="When the Churn Occurs")))
   fig.update_xaxes(
-      title_text = "Days")
+      title_text = "Days",showgrid=False)
   fig.update_yaxes(
-      title_text = "Percentage of Churn")
-  vAR_st.plotly_chart(fig)  
+      title_text = "Percentage of Churn",showgrid=False)
+  fig.update_layout(plot_bgcolor='rgba(0,0,0,1.0)')
+  vAR_st.plotly_chart(fig)
 
 
 def visual_5(data):
