@@ -35,7 +35,7 @@ vAR_st.markdown("""<style>.css-17eq0hr {
 </style>""", unsafe_allow_html=True)
 
 
-
+#for clear/reset button
 vAR_st.markdown("""<style>#root > div:nth-child(1) > div > div > div > div > section.css-1lcbmhc.e1fqkh3o0 > div.css-17eq0hr.e1fqkh3o1 > div.block-container.css-1gx893w.eknhn3m2 > div:nth-child(1) > div:nth-child(5)  
 {
     background-color:rgb(47 236 106);  
@@ -74,6 +74,7 @@ vAR_st.markdown("""
 """, unsafe_allow_html=True)
 
 
+#for training the model 
 def training(method):
 
   #training dataset
@@ -91,6 +92,7 @@ def training(method):
   model_training = model.fit(training_data_features,training_data_label)
 
 
+#for testing the model 
 def testing(method):
 
   #training dataset
@@ -172,8 +174,8 @@ def test_code_log():
     table_7 = HTML(churn_probability.to_html(col_space=None,max_rows=10,max_cols=6))
     vAR_st.write(table_7)
 
-def visual_graphs(method):
 
+def visual_graphs(method):
   #training dataset
   training_data = df_training 
   training_data_features = training_data[['Quantity','Price','Service Call','Service Failure Rate%','Customer Lifetime(Days)']]
@@ -349,6 +351,7 @@ def train_code_dec():
       model_training = model.fit(training_data_features,training_data_label)
 
 
+#to download model outcome 
 def download(method):
 
   #training dataset
@@ -395,6 +398,7 @@ def download(method):
   vAR_st.markdown(href,unsafe_allow_html=True)
   
 
+#for visual charts
 def visual_6(data):
   percentage = (cum_churn/60)*100
   fig = go.Figure(
@@ -414,6 +418,7 @@ def visual_6(data):
   vAR_st.plotly_chart(fig)
 
 
+#for visual charts
 def visual_5(data):
   percentage = (cum_churn/60)*100
   fig = go.Figure(
@@ -432,6 +437,7 @@ def visual_5(data):
   vAR_st.plotly_chart(fig)
 
 
+#for visual charts
 def visual_3(data):
     group = data.groupby('Gender')
     new_df = group.size().reset_index(name='Count')
@@ -458,6 +464,7 @@ def visual_3(data):
     vAR_st.plotly_chart(fig)
 
 
+#for visual charts
 def visual_4(data):
     group = data.groupby('Reason for The customer to Churn / Non Churn')
     new_df = group.size().reset_index(name='counts')
@@ -485,6 +492,7 @@ def visual_4(data):
     vAR_st.plotly_chart(fig)
 
 
+#for visual charts
 def visual_1(data):
   no = data['Churn Prediction'].tolist().count(0)
   yes = data['Churn Prediction'].tolist().count(1)
@@ -496,6 +504,8 @@ def visual_1(data):
   ax1.pie(sizes, explode=explode, labels=labels, autopct='%1.1f%%',shadow=True, startangle=90)
   vAR_st.pyplot(fig1)
 
+
+#for visual charts
 def visual_2(data):
   m = data['Gender'].tolist().count('Male')
   f = data['Gender'].tolist().count('Female')
@@ -507,7 +517,7 @@ def visual_2(data):
   vAR_st.pyplot(fig1)
 
 
-
+#for extract feature 
 def feature():
   features = df_training.drop(['CustomerID','Churn'], axis =1)
   for col in features.columns:
@@ -523,6 +533,8 @@ def feature_code():
 
 menu = ["Home","Model Validation","Download Model Outcome","Data visualization","Deploy the Model"]
 choice = vAR_st.sidebar.selectbox("Menu",menu)
+
+#for problem statement selection box
 col1, col2, col3, col4, col5 = vAR_st.columns([0.25,1.5,2.75,0.25,1.75])
 with col2:
     vAR_st.write('')
@@ -532,7 +544,7 @@ with col3:
     vAR_problem = vAR_st.selectbox('',('Select the Problem Statement','Customer Churn: Who is going to churn?','Customer Churn: When will the churn occur?','Customer Churn: Why does the churn occurs?'),index=0)
 
 
-
+#for problem type selection type
 col1, col2, col3, col4, col5 = vAR_st.columns([0.25,1.5,2.75,0.25,1.75])
 with col2:
   if vAR_problem != 'Select the Problem Statement':
@@ -544,7 +556,7 @@ with col3:
     vAR_type = vAR_st.selectbox('',('Select the Problem type','Classification','Regression','Clustering','Continued Decision Making'),index=0)
 
 
-
+#for model selection selection model 
 col1, col2, col3, col4, col5 = vAR_st.columns([0.25,1.5,2.75,0.25,1.75])
 with col2:
   if vAR_problem != 'Select the Problem Statement':
@@ -600,7 +612,7 @@ with col3:
               import plotly.graph_objects as go              
 
 
-
+#for uploading training dataset
 vAR_st.write('')
 col1, col2, col3, col4, col5 = vAR_st.columns([0.25,1.5,2.75,0.25,1.75])
 with col2:
@@ -645,7 +657,7 @@ with col3:
             full_table_1 = vAR_st.button('Click for all Set of rows')
 
 
-
+#to preview the uploaded training file  
 if vAR_problem != 'Select the Problem Statement':
   if vAR_type != 'Select the Problem type':
     if vAR_model != 'Select the Model':
@@ -661,7 +673,7 @@ if vAR_problem != 'Select the Problem Statement':
 
 
 
-
+#for feature engineering 
 col1, col2, col3, col4, col5 = vAR_st.columns([0.25,1.5,2.75,0.25,1.75])
 with col2:
   if vAR_problem != 'Select the Problem Statement':
@@ -705,7 +717,7 @@ with col4:
           if button_feature:
             feature()
 
-
+#to display feature engineering source code
 if vAR_problem != 'Select the Problem Statement':
   if vAR_type != 'Select the Problem type':
     if vAR_model != 'Select the Model':
@@ -714,7 +726,7 @@ if vAR_problem != 'Select the Problem Statement':
           feature_code()
 
 
-
+#for training the dataset 
 vAR_st.write('') 
 col1, col2, col3, col4, col5 = vAR_st.columns([0.25,1.5,2.75,0.25,1.75])
 with col2:
@@ -766,6 +778,7 @@ if vAR_problem != 'Select the Problem Statement':
             train_code_dec()
 
 
+#to test the model 
 vAR_st.write('')
 col1, col2, col3, col4, col5 = vAR_st.columns([0.25,1.5,2.75,0.25,1.75])
 with col2:
@@ -911,6 +924,7 @@ if choice == "Model Validation":
   with col3:
     vAR_st.button("Click here", key="6")
 
+#to download the model outcome 
 if choice == "Download Model Outcome":
   col1, col2, col3, col4, col5 = vAR_st.columns([0.25,1.5,2.75,0.25,1.75])
   with col2:  
@@ -935,6 +949,7 @@ if choice == "Download Model Outcome":
                     download(method)
                 
 
+#to display visual charts 
 if choice == "Data visualization":
   col1, col2, col3, col4, col5 = vAR_st.columns([0.25,1.5,2.75,0.25,1.75])
   with col2:  
