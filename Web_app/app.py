@@ -1,3 +1,11 @@
+"""
+# File Name          :    main.py
+# Purpose            :    Machine Learning Model for Churn Prediction using Streamlit 
+# Author             :    DeepSphere.AI, Inc.
+# Date and Time      :    03/10/2020 11:00hrs 
+# Version            :    0.83.0
+"""
+
 import streamlit as vAR_st
 import streamlit.components.v1 as components
 import pandas as pd
@@ -1052,3 +1060,14 @@ gcp = vAR_st.sidebar.selectbox(" ",services)
 
 href = f'<a style="color:black;" href="https://share.streamlit.io/tarun243/streamlit-commontoallindustry/Web_app/app.py/" class="button">Clear/Reset</a>'
 vAR_st.sidebar.markdown(href, unsafe_allow_html=True)
+
+
+
+"""
+Disclaimer.
+We are providing this code block strictly for learning and researching, this is not a production
+ready code. We have no liability on this particular code under any circumstances; users should
+use this code on their own risk. All software, hardware and othr products that are referenced
+in these materials belong to the respective vendor who developed or who owns this product.
+
+"""
