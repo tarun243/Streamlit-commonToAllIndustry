@@ -1,10 +1,10 @@
-"""
+
 # File Name          :    main.py
 # Purpose            :    Machine Learning Model for Churn Prediction using Streamlit 
 # Author             :    DeepSphere.AI, Inc.
 # Date and Time      :    03/10/2020 11:00hrs 
 # Version            :    0.83.0
-"""
+
 
 import streamlit as vAR_st
 import streamlit.components.v1 as components
