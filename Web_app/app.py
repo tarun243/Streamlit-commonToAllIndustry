@@ -1063,11 +1063,9 @@ vAR_st.sidebar.markdown(href, unsafe_allow_html=True)
 
 
 
-"""
-Disclaimer.
-We are providing this code block strictly for learning and researching, this is not a production
-ready code. We have no liability on this particular code under any circumstances; users should
-use this code on their own risk. All software, hardware and othr products that are referenced
-in these materials belong to the respective vendor who developed or who owns this product.
+# Disclaimer.
+# We are providing this code block strictly for learning and researching, this is not a production
+# ready code. We have no liability on this particular code under any circumstances; users should
+# use this code on their own risk. All software, hardware and othr products that are referenced
+# in these materials belong to the respective vendor who developed or who owns this product.
 
-"""
