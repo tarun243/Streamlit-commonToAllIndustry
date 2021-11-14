@@ -179,7 +179,6 @@ def test_code_log():
     churn_probability = prediction_result.merge(prediction_result_probability_all_features,
       left_index=True,right_index=True)
     table_7 = HTML(churn_probability.to_html(col_space=None,max_rows=10,max_cols=6))
-    vAR_st.write(table_7)
 
 
 def visual_graphs(method):
@@ -223,7 +222,6 @@ def visual_graphs(method):
 
 def train_code_log():
   with vAR_st.echo():
-    def training():
 
       #training data
       training_data = df_training 
@@ -241,13 +239,10 @@ def train_code_log():
 
 
 def test_code_ran():
+  feature_selection = training_data_features[['Customer Lifetime(Days)']]
   with vAR_st.echo():
-    #training dataset
-    training_data = df_training 
-    training_data_features = training_data[['Quantity','Price','Service Call','Service Failure Rate%','Customer Lifetime(Days)']]
-            
     #feature selection for training
-    training_data_features = training_data_features[['Customer Lifetime(Days)']]
+    training_data_features = feature_selection
 
     #Label for Training
     training_data_label = training_data[['Churn']]
@@ -277,26 +272,20 @@ def test_code_ran():
     churn_probability = prediction_result.merge(prediction_result_probability_all_features,
       left_index=True,right_index=True)
     table_7 = HTML(churn_probability.to_html(col_space=None,max_rows=10,max_cols=6))
-    vAR_st.write(table_7)
 
 
 def train_code_ran():
+  feature_selection = training_data_features[['Customer Lifetime(Days)']]
   with vAR_st.echo():
-    def training():
+    #feature selection for training
+    training_data_features = feature_selection
 
-      #training data
-      training_data = df_training 
-      training_data_features = training_data[['Quantity','Price','Service Call','Service Failure Rate%','Customer Lifetime(Days)']]
-            
-      #feature selection for training
-      training_data_features = training_data_features[['Customer Lifetime(Days)']]
+    #Label for Training
+    training_data_label = training_data[['Churn']]
 
-      #Label for Training
-      training_data_label = training_data[['Churn']]
-
-      #model training 
-      model = RandomForestClassifier()
-      model_training = model.fit(training_data_features,training_data_label)
+    #model training 
+    model = RandomForestClassifier()
+    model_training = model.fit(training_data_features,training_data_label)
 
 
 def test_code_dec():
@@ -336,26 +325,23 @@ def test_code_dec():
     churn_probability = prediction_result.merge(prediction_result_probability_all_features,
       left_index=True,right_index=True)
     table_7 = HTML(churn_probability.to_html(col_space=None,max_rows=10,max_cols=6))
-    vAR_st.write(table_7)
-
 
 def train_code_dec():
   with vAR_st.echo():
-    def training():
 
-      #training data
-      training_data = df_training 
-      training_data_features = training_data[['Quantity','Price','Service Call','Service Failure Rate%','Customer Lifetime(Days)']]
+    #training data
+    training_data = df_training 
+    training_data_features = training_data[['Quantity','Price','Service Call','Service Failure Rate%','Customer Lifetime(Days)']]
             
-      #feature selection for training
-      training_data_features = training_data_features[['Customer Lifetime(Days)']]
+    #feature selection for training
+    training_data_features = training_data_features[['Customer Lifetime(Days)']]
 
-      #Label for Training
-      training_data_label = training_data[['Churn']]
+    #Label for Training
+    training_data_label = training_data[['Churn']]
 
-      #model training 
-      model = DecisionTreeClassifier()
-      model_training = model.fit(training_data_features,training_data_label)
+    #model training 
+    model = DecisionTreeClassifier()
+    model_training = model.fit(training_data_features,training_data_label)
 
 
 #to download model outcome 
