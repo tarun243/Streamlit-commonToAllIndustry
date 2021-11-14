@@ -86,7 +86,7 @@ def training(method):
 
   #training dataset
   training_data = df_training 
-  training_data_features = training_data_features_s
+  training_data_features = training_data[['Quantity','Price','Service Call','Service Failure Rate%','Customer Lifetime(Days)']]
 
   #feature selection for training
   training_data_features = training_data_features[['Customer Lifetime(Days)']]
@@ -104,8 +104,8 @@ def testing(method):
 
   #training dataset
   training_data = df_training 
-  training_data_features = training_data_features_s
-  
+  training_data_features = training_data[['Quantity','Price','Service Call','Service Failure Rate%','Customer Lifetime(Days)']]
+
   #feature selection for training
   training_data_features = training_data_features[['Customer Lifetime(Days)']]
 
