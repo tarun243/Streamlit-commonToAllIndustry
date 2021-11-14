@@ -533,9 +533,8 @@ def feature():
 def feature_code():
   with vAR_st.echo():
     def feature():
-      for col in df_training.columns:
-        vAR_st.write(col) 
-
+      training_data_features_s = vAR_st.multiselect('Select the features to train the model',feature_col)
+      vAR_st.write(str(training_data_features_s))
 
 
 menu = ["Home","Model Validation","Download Model Outcome","Data visualization","Deploy the Model"]
@@ -706,7 +705,7 @@ with col5:
         if vAR_training_data:
           vAR_st.write('')
           feature_source_code = vAR_st.button('Source Code',key='12')
-          
+
 #to display feature engineering source code
 if vAR_problem != 'Select the Problem Statement':
   if vAR_type != 'Select the Problem type':
