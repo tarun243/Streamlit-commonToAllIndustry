@@ -89,7 +89,7 @@ def training(method):
   training_data_features = training_data[['Quantity','Price','Service Call','Service Failure Rate%','Customer Lifetime(Days)']]
 
   #feature selection for training
-  training_data_features = training_data_features[['Customer Lifetime(Days)']]
+  training_data_features = training_data_features_s
 
   #Label for Training
   training_data_label = training_data[['Churn']]
@@ -99,7 +99,7 @@ def training(method):
   model_training = model.fit(training_data_features,training_data_label)
 
 
-#for testing the model 
+#for testing the model
 def testing(method):
 
   #training dataset
@@ -107,7 +107,7 @@ def testing(method):
   training_data_features = training_data[['Quantity','Price','Service Call','Service Failure Rate%','Customer Lifetime(Days)']]
 
   #feature selection for training
-  training_data_features = training_data_features[['Customer Lifetime(Days)']]
+  training_data_features = training_data_features_s
 
   #Label for Training
   training_data_label = training_data[['Churn']]
