@@ -699,14 +699,6 @@ with col3:
           training_data_features_s = vAR_st.multiselect('Select the features to train the model',feature_col)
           vAR_st.write(str(training_data_features_s))
 
-with col3:
-  if vAR_problem != 'Select the Problem Statement':
-    if vAR_type != 'Select the Problem type':
-      if vAR_model != 'Select the Model':
-        if vAR_training_data:
-          vAR_st.write('')
-          button_feature = vAR_st.button('Extract Feature')
-          vAR_st.write('')
 with col5:
   if vAR_problem != 'Select the Problem Statement':
     if vAR_type != 'Select the Problem type':
@@ -715,7 +707,15 @@ with col5:
           vAR_st.write('')
           feature_source_code = vAR_st.button('Source Code',key='12')
 
-
+col1, col2, col3, col4, col5 = vAR_st.columns([0.25,1.5,2.75,0.25,1.75])
+with col3:
+  if vAR_problem != 'Select the Problem Statement':
+    if vAR_type != 'Select the Problem type':
+      if vAR_model != 'Select the Model':
+        if vAR_training_data:
+          vAR_st.write('')
+          button_feature = vAR_st.button('Extract Feature')
+          vAR_st.write('')
 
 col1, col2, col3, col4, col5= vAR_st.columns([0.25,1.5,3.5,5,0.5])
 with col3:
