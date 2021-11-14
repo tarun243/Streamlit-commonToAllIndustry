@@ -732,8 +732,6 @@ with col3:
             features = df_training.drop(['CustomerID','Churn'], axis =1)
             for i in range(len(features.columns)):
               vAR_st.write('Feature ',i+1)  
-
-col1, col2, col3, col4, col5= vAR_st.columns([0.25,1.5,3.5,5,0.5])
 with col4:
   if vAR_problem != 'Select the Problem Statement':
     if vAR_type != 'Select the Problem type':
