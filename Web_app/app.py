@@ -706,18 +706,14 @@ with col5:
         if vAR_training_data:
           vAR_st.write('')
           feature_source_code = vAR_st.button('Source Code',key='12')
-
-
-col1, col2, col3, col4, col5= vAR_st.columns([0.25,1.5,3.5,5,0.5])
-with col3:
-  if vAR_problem != 'Select the Problem Statement':
-    if vAR_type != 'Select the Problem type':
-      if vAR_model != 'Select the Model':
-        if vAR_training_data:
-          if button_feature:
-            features = df_training.drop(['CustomerID','Churn'], axis =1)
-            for i in range(len(features.columns)):
-              vAR_st.write('Feature ',i+1)  
+          
+#to display feature engineering source code
+if vAR_problem != 'Select the Problem Statement':
+  if vAR_type != 'Select the Problem type':
+    if vAR_model != 'Select the Model':
+      if vAR_training_data:
+        if feature_source_code:
+          feature_code()
 col1, col2, col3, col4, col5 = vAR_st.columns([0.25,1.5,2.75,0.25,1.75])
 with col3:
   if vAR_problem != 'Select the Problem Statement':
@@ -728,6 +724,17 @@ with col3:
           button_feature = vAR_st.button('Extract Feature')
           vAR_st.write('')  
 col1, col2, col3, col4, col5= vAR_st.columns([0.25,1.5,3.5,5,0.5])
+with col3:
+  if vAR_problem != 'Select the Problem Statement':
+    if vAR_type != 'Select the Problem type':
+      if vAR_model != 'Select the Model':
+        if vAR_training_data:
+          if button_feature:
+            features = df_training.drop(['CustomerID','Churn'], axis =1)
+            for i in range(len(features.columns)):
+              vAR_st.write('Feature ',i+1)  
+
+col1, col2, col3, col4, col5= vAR_st.columns([0.25,1.5,3.5,5,0.5])
 with col4:
   if vAR_problem != 'Select the Problem Statement':
     if vAR_type != 'Select the Problem type':
@@ -736,13 +743,6 @@ with col4:
           if button_feature:
             feature()
 
-#to display feature engineering source code
-if vAR_problem != 'Select the Problem Statement':
-  if vAR_type != 'Select the Problem type':
-    if vAR_model != 'Select the Model':
-      if vAR_training_data:
-        if feature_source_code:
-          feature_code()
 
 
 #for training the dataset 
