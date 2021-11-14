@@ -1,4 +1,3 @@
-
 # File Name          :    main.py
 # Purpose            :    Machine Learning Model for Churn Prediction using Streamlit 
 # Author             :    DeepSphere.AI, Inc.
@@ -695,6 +694,17 @@ with col3:
       if vAR_model != 'Select the Model':
         if vAR_training_data:
           vAR_st.write('')
+          features_1 = df_training.drop(['CustomerID','Churn'], axis =1)
+          feature_col = features_1.columns
+          training_data_features_s = vAR_st.multiselect('Select the features to train the model',feature_col)
+          vAR_st.write(str(training_data_features_s))
+
+with col3:
+  if vAR_problem != 'Select the Problem Statement':
+    if vAR_type != 'Select the Problem type':
+      if vAR_model != 'Select the Model':
+        if vAR_training_data:
+          vAR_st.write('')
           button_feature = vAR_st.button('Extract Feature')
           vAR_st.write('')
 with col5:
@@ -1058,8 +1068,9 @@ services = ["GCP Services Used","VM Instance","Compute Engine",'Cloud Storage']
 gcp = vAR_st.sidebar.selectbox(" ",services)
 
 
-href = f'<a style="color:black;" href="https://share.streamlit.io/tarun243/streamlit-commontoallindustry/Web_app/app.py/" class="button">Clear/Reset</a>'
+href = f'<a style="color:black;" href="http://localhost:8501/" class="button">Clear/Reset</a>'
 vAR_st.sidebar.markdown(href, unsafe_allow_html=True)
+
 
 
 
@@ -1068,4 +1079,5 @@ vAR_st.sidebar.markdown(href, unsafe_allow_html=True)
 # ready code. We have no liability on this particular code under any circumstances; users should
 # use this code on their own risk. All software, hardware and othr products that are referenced
 # in these materials belong to the respective vendor who developed or who owns this product.
+
 
