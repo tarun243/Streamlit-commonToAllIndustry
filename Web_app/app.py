@@ -527,7 +527,7 @@ def visual_2(data):
 #for extract feature 
 def feature():
   features = df_training.drop(['CustomerID','Churn'], axis =1)
-  for col in features.columns:
+  for col in training_data_features_s:
     vAR_st.write(col)
 
 def feature_code():
@@ -730,7 +730,7 @@ with col3:
         if vAR_training_data:
           if button_feature:
             features = df_training.drop(['CustomerID','Churn'], axis =1)
-            for i in range(len(features.columns)):
+            for i in range(len(training_data_features_s)):
               vAR_st.write('Feature ',i+1)  
 with col4:
   if vAR_problem != 'Select the Problem Statement':
