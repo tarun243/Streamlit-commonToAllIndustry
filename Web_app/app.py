@@ -86,7 +86,7 @@ def training(method):
 
   #training dataset
   training_data = df_training 
-  training_data_features = training_data[['Quantity','Price','Service Call','Service Failure Rate%','Customer Lifetime(Days)']]
+  training_data_features = training_data_features_s
 
   #feature selection for training
   training_data_features = training_data_features[['Customer Lifetime(Days)']]
@@ -104,8 +104,8 @@ def testing(method):
 
   #training dataset
   training_data = df_training 
-  training_data_features = training_data[['Quantity','Price','Service Call','Service Failure Rate%','Customer Lifetime(Days)']]
-
+  training_data_features = training_data_features_s
+  
   #feature selection for training
   training_data_features = training_data_features[['Customer Lifetime(Days)']]
 
@@ -722,6 +722,7 @@ with col3:
           vAR_st.write('')
           button_feature = vAR_st.button('Extract Feature')
           vAR_st.write('')  
+
 col1, col2, col3, col4, col5= vAR_st.columns([0.25,1.5,3.5,5,0.5])
 with col3:
   if vAR_problem != 'Select the Problem Statement':
