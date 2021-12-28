@@ -5,6 +5,8 @@
 # Version            :    0.83.0
 
 
+
+
 import streamlit as vAR_st
 import streamlit.components.v1 as components
 import pandas as pd
@@ -22,20 +24,24 @@ import plotly.graph_objects as go
 
 #for Setting the page layout to wide
 vAR_st.set_page_config(layout="wide")
-
-col1, col2, col3 = vAR_st.columns([3,5,3])
+col1, col2, col3 = vAR_st.columns([2, 5, 2])
+with col1:
+    vAR_st.write('')
 with col2:
-  vAR_st.image('https://raw.githubusercontent.com/tarun243/Streamlit-commonToAllIndustry/master/Web_app/Logo_final.png')
+    vAR_st.image('https://raw.githubusercontent.com/tarun243/Streamlit-commonToAllIndustry/master/Web_app/Logo_final.png')
+with col3:
+    vAR_st.write('')
 
 #setting font size and colour for the title 
 #by this text-align: centre, we can align the title to the centre of the page
-vAR_st.markdown("<h1 style='text-align: center; color: black; font-size:29px;'>Learn to Build Industry Standard Data Science Applications </h1>", unsafe_allow_html=True)
-vAR_st.markdown("<h1 style='text-align: center; color: blue; font-size:29px;'>Powered by Google Cloud and Streamlit</h1>", unsafe_allow_html=True)
+vAR_st.markdown("<h1 style='text-align: center; color: black; font-size:29px;'>Learn to Build Industry Standard Data Science Applications</h1>", unsafe_allow_html=True)
 
+vAR_st.markdown("<p style='text-align: center; color: blue; font-size:29px;'>MLOPS Built On Google Cloud and Streamlit</p>", unsafe_allow_html=True)
 
+vAR_st.markdown("<p style='text-align: center; color: black; font-size:20px;'><span style='font-weight: bold'>Problem Statement: </span>Develop a Retail Machine Learning Applications (MLOPS): Customer Churn: Who is Going to Churn, When the Churn will Occur, Why it Occurs, and How to Prevent?</p>", unsafe_allow_html=True)
 
 #for background color of sidebar
-vAR_st.markdown("""<style>.css-17eq0hr {
+vAR_st.markdown("""<style>.css-1d391kg, .e1fqkh3o1 {
     background-color: #4c85e4;
     width: 19rem;
 }
@@ -43,7 +49,7 @@ vAR_st.markdown("""<style>.css-17eq0hr {
 
 
 #for clear/reset button
-vAR_st.markdown("""<style>#root > div:nth-child(1) > div > div > div > div > section.css-1lcbmhc.e1fqkh3o0 > div.css-17eq0hr.e1fqkh3o1 > div.block-container.css-1gx893w.eknhn3m2 > div:nth-child(1) > div:nth-child(5)  
+vAR_st.markdown("""<style>.button  
 {
     background-color:rgb(47 236 106);  
     top: 40px; 
@@ -535,12 +541,22 @@ def feature_code():
       training_data_features_s = vAR_st.multiselect('Select the features to train the model',feature_col)
       vAR_st.write(str(training_data_features_s))
 
+#hyperparameter
+def hyperparamater():
+    for ele in hyperparameters:
+        vAR_st.write(ele)
 
 menu = ["Home","Model Validation","Download Model Outcome","Data visualization","Deploy the Model"]
 choice = vAR_st.sidebar.selectbox("Menu",menu)
 
 #for problem statement selection box
 col1, col2, col3, col4, col5 = vAR_st.columns([0.25,1.5,2.75,0.25,1.75])
+with col1:
+    vAR_st.write('')
+with col4:
+    vAR_st.write('')
+with col5:
+    vAR_st.write('')
 with col2:
     vAR_st.write('')
     vAR_st.write('')
@@ -551,6 +567,12 @@ with col3:
 
 #for problem type selection type
 col1, col2, col3, col4, col5 = vAR_st.columns([0.25,1.5,2.75,0.25,1.75])
+with col1:
+    vAR_st.write('')
+with col4:
+    vAR_st.write('')
+with col5:
+    vAR_st.write('')
 with col2:
   if vAR_problem != 'Select the Problem Statement':
     vAR_st.write('')
@@ -563,6 +585,10 @@ with col3:
 
 #for model selection selection model 
 col1, col2, col3, col4, col5 = vAR_st.columns([0.25,1.5,2.75,0.25,1.75])
+with col1:
+    vAR_st.write('')
+with col4:
+    vAR_st.write('')
 with col2:
   if vAR_problem != 'Select the Problem Statement':
     if vAR_type != 'Select the Problem type':
@@ -620,6 +646,10 @@ with col3:
 #for uploading training dataset
 vAR_st.write('')
 col1, col2, col3, col4, col5 = vAR_st.columns([0.25,1.5,2.75,0.25,1.75])
+with col1:
+    vAR_st.write('')
+with col4:
+    vAR_st.write('')
 with col2:
   if vAR_problem != 'Select the Problem Statement':
     if vAR_type != 'Select the Problem type':
@@ -653,6 +683,14 @@ with col5:
 
 
 col1, col2, col3, col4, col5 = vAR_st.columns([0.25,1.5,2.75,0.25,1.75])
+with col1:
+    vAR_st.write('')
+with col4:
+    vAR_st.write('')
+with col5:
+    vAR_st.write('')
+with col2:
+    vAR_st.write('')
 with col3:
   if vAR_problem != 'Select the Problem Statement':
     if vAR_type != 'Select the Problem type':
@@ -680,6 +718,10 @@ if vAR_problem != 'Select the Problem Statement':
 
 #for feature engineering 
 col1, col2, col3, col4, col5 = vAR_st.columns([0.25,1.5,2.75,0.25,1.75])
+with col1:
+    vAR_st.write('')
+with col4:
+    vAR_st.write('')
 with col2:
   if vAR_problem != 'Select the Problem Statement':
     if vAR_type != 'Select the Problem type':
@@ -713,6 +755,14 @@ if vAR_problem != 'Select the Problem Statement':
         if feature_source_code:
           feature_code()
 col1, col2, col3, col4, col5 = vAR_st.columns([0.25,1.5,2.75,0.25,1.75])
+with col1:
+    vAR_st.write('')
+with col4:
+    vAR_st.write('')
+with col5:
+    vAR_st.write('')
+with col2:
+    vAR_st.write('')
 with col3:
   if vAR_problem != 'Select the Problem Statement':
     if vAR_type != 'Select the Problem type':
@@ -723,6 +773,12 @@ with col3:
           vAR_st.write('')  
 
 col1, col2, col3, col4, col5= vAR_st.columns([0.25,1.5,3.5,5,0.5])
+with col1:
+    vAR_st.write('')
+with col5:
+    vAR_st.write('')
+with col2:
+    vAR_st.write('')
 with col3:
   if vAR_problem != 'Select the Problem Statement':
     if vAR_type != 'Select the Problem type':
@@ -740,11 +796,63 @@ with col4:
           if button_feature:
             feature()
 
+#for hyperparameter tuning
+col1, col2, col3, col4, col5 = vAR_st.columns([0.25,1.5,2.75,0.25,1.75])
+with col1:
+    vAR_st.write('')
+with col4:
+    vAR_st.write('')
+with col5:
+    vAR_st.write('')
+with col2:
+  if vAR_problem != 'Select the Problem Statement':
+    if vAR_type != 'Select the Problem type':
+      if vAR_model != 'Select the Model':
+        if vAR_training_data:
+          vAR_st.subheader("Hyperparameter Tuning")
+with col3:
+  if vAR_problem != 'Select the Problem Statement':
+    if vAR_type != 'Select the Problem type':
+      if vAR_model != 'Select the Model':
+        if vAR_training_data:
+          if vAR_model == 'Logistic Regression':
+            vAR_st.write('')
+            hyperparameters = vAR_st.slider('max_iter:', 100, 1000, 100)
+            vAR_st.write(str(hyperparameters))
+          if (vAR_model == 'Decision Tree') or (vAR_model == 'Random Forest'):
+            vAR_st.write('')
+            hyperparameters = vAR_st.selectbox('criterion:', ['gini', 'entropy'])
+            vAR_st.write(str(hyperparameters))
+          if vAR_model == 'K Means Clustering':
+            vAR_st.write('')
+            hyperparameters = vAR_st.slider('n_clusters:', 2, 30, 8)
+            vAR_st.write(str(hyperparameters))
 
+col1, col2, col3, col4, col5 = vAR_st.columns([0.25,1.5,2.75,0.25,1.75])
+with col1:
+    vAR_st.write('')
+with col4:
+    vAR_st.write('')
+with col5:
+    vAR_st.write('')
+with col2:
+    vAR_st.write('')
+with col3:
+  if vAR_problem != 'Select the Problem Statement':
+    if vAR_type != 'Select the Problem type':
+      if vAR_model != 'Select the Model':
+        if vAR_training_data:
+          vAR_st.write('')
+          button_feature = vAR_st.button('Set Hyperparameter')
+          vAR_st.write('')
 
 #for training the dataset 
 vAR_st.write('') 
 col1, col2, col3, col4, col5 = vAR_st.columns([0.25,1.5,2.75,0.25,1.75])
+with col1:
+    vAR_st.write('')
+with col4:
+    vAR_st.write('')
 with col2:
   if vAR_problem != 'Select the Problem Statement':
     if vAR_type != 'Select the Problem type':
@@ -797,6 +905,10 @@ if vAR_problem != 'Select the Problem Statement':
 #to test the model 
 vAR_st.write('')
 col1, col2, col3, col4, col5 = vAR_st.columns([0.25,1.5,2.75,0.25,1.75])
+with col1:
+    vAR_st.write('')
+with col4:
+    vAR_st.write('')
 with col2:
   if vAR_problem != 'Select the Problem Statement':
     if vAR_type != 'Select the Problem type':
@@ -839,6 +951,14 @@ with col5:
 
 
 col1, col2, col3, col4, col5 = vAR_st.columns([0.25,1.5,2.75,0.25,1.75])
+with col1:
+    vAR_st.write('')
+with col4:
+    vAR_st.write('')
+with col5:
+    vAR_st.write('')
+with col2:
+    vAR_st.write('')
 with col3:
   if vAR_problem != 'Select the Problem Statement':
     if vAR_type != 'Select the Problem type':
@@ -869,6 +989,12 @@ if vAR_problem != 'Select the Problem Statement':
 
 
 col1, col2, col3, col4, col5 = vAR_st.columns([0.25,1.5,2.75,0.25,1.75])
+with col1:
+    vAR_st.write('')
+with col4:
+    vAR_st.write('')
+with col2:
+    vAR_st.write('')
 with col3:
   if vAR_problem != 'Select the Problem Statement':
     if vAR_type != 'Select the Problem type':
@@ -909,6 +1035,10 @@ if vAR_problem != 'Select the Problem Statement':
 
 
 col1, col2, col4 = vAR_st.columns([0.5,4,0.5])
+with col1:
+    vAR_st.write('')
+with col4:
+    vAR_st.write('')
 with col2:
   if vAR_problem != 'Select the Problem Statement':
     if vAR_type != 'Select the Problem type':
@@ -935,6 +1065,12 @@ if choice == "Home":
 
 if choice == "Model Validation":
   col1, col2, col3, col4, col5 = vAR_st.columns([0.25,1.5,2.75,0.25,1.75])
+  with col1:
+    vAR_st.write('')
+  with col4:
+    vAR_st.write('')
+  with col5:
+    vAR_st.write('')
   with col2:
     vAR_st.subheader("Model Validation")
   with col3:
@@ -943,6 +1079,12 @@ if choice == "Model Validation":
 #to download the model outcome 
 if choice == "Download Model Outcome":
   col1, col2, col3, col4, col5 = vAR_st.columns([0.25,1.5,2.75,0.25,1.75])
+  with col1:
+    vAR_st.write('')
+  with col4:
+    vAR_st.write('')
+  with col5:
+    vAR_st.write('')
   with col2:  
     vAR_st.subheader("Download Model Outcome")
   with col3:
@@ -968,6 +1110,12 @@ if choice == "Download Model Outcome":
 #to display visual charts 
 if choice == "Data visualization":
   col1, col2, col3, col4, col5 = vAR_st.columns([0.25,1.5,2.75,0.25,1.75])
+  with col1:
+    vAR_st.write('')
+  with col4:
+    vAR_st.write('')
+  with col5:
+    vAR_st.write('')
   with col2:  
     vAR_st.subheader("Data visualization")
   with col3:
@@ -1015,6 +1163,10 @@ if choice == "Data visualization":
                     visual_2(data)
 
   col1, col2, col3 = vAR_st.columns([1,3,1])
+  with col1:
+    vAR_st.write('')
+  with col3:
+    vAR_st.write('')
   with col2:
     if vAR_problem != 'Select the Problem Statement':
       if vAR_type != 'Select the Problem type':
